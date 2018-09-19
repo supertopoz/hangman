@@ -1,14 +1,17 @@
 import React from "react";
+import {connect} from "react-redux";
 import styled from "styled-components";
+import { addWords } from "../../actions/hangmanActions";
+
 
 const MainWrapper = styled.div`
 
     display: grid;
     margin: 0 auto;
     grid-gap:20px;
-    margin-top: 20px;
     @media only screen and (min-width: 320px)  { 
       grid-template-columns: 1fr;
+      grid-gap:5px;
     }
     @media only screen and (min-width: 768px)  {   
       grid-template-columns: 1fr 1fr;
@@ -21,7 +24,8 @@ const MainWrapper = styled.div`
 `
 
 const Options = styled.div`
-  
+    text-align: right;
+    padding: 2px;
 `
 
 const ScreenSection = styled.div`
@@ -31,7 +35,7 @@ const ScreenSection = styled.div`
     padding: 10px;
     border-radius: 10px;
     height:300px;
-    grid-template-rows: 5fr 1fr;
+    grid-template-rows: 7fr 1fr;
 
 `
 
@@ -39,11 +43,7 @@ const DiscardedLetters = styled.div`
   background: #424242
   color: white;
   padding: 10px;
-  border-radius: 10px;
-
-    
-`
-const DiscardedLettersTitle = styled.div`
+  border-radius: 10px;   
 `
 
 const HangmanView = styled.div`
@@ -89,28 +89,46 @@ const Letter = styled.div`
  `
 
 const alphatbet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-export const Hangman = (props) => {
- return (
-      <div>
-      <Options>Options</Options>
-      <MainWrapper>
-      
-      
+
+class Hangman extends React.Component {
+
+
+  componentDidMount(){
+    const wordList = ['apple','bat','cat'];
+
+    this.props.addWords(wordList)
+  }
+
+  render(){
+    console.log('Hangman props',this.props)
+    return (
+    <div>
+    <Options><i className="material-icons">settings</i></Options>
+    <MainWrapper>
       <ScreenSection>
       <HangmanView></HangmanView>
-      <DiscardedLetters>
-      <DiscardedLettersTitle>Not Found:</DiscardedLettersTitle>
-      A,B,C,D,E,F,B
-      </DiscardedLetters>  
+      <DiscardedLetters>Not Found: A,B,C,D,E,F,B</DiscardedLetters>  
       </ScreenSection>
       <AlphabetSection>        
       {alphatbet.map((item, index)=>{
-        return  <Letter key={`letter-${index}`}>{item}</Letter>  
+      return  <Letter key={`letter-${index}`}>{item}</Letter>  
       })}
       </AlphabetSection>
-
-
-      </MainWrapper>
-      </div>
+    </MainWrapper>
+    </div>
     );
+  }
 }
+
+const mapStateToProps = (state) => {
+  return { hangman: state.hangman };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addWords: (word) => { dispatch(addWords(word)) }    
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Hangman);

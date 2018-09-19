@@ -5,9 +5,9 @@ import {NotificationContainer} from 'react-notifications';
 import { Home } from "../components/Home/Home";
 import { About } from "../components/About/About";
 import { Disclaimer } from "../components/Disclaimer/Disclaimer";
-import { Hangman } from "../components/Hangman/Hangman";
-import  SideMenu from "../components/SideMenu/SideMenu";
-import  Header from "../components/Header/Header";
+import Hangman from "../components/Hangman/Hangman";
+import SideMenu from "../components/SideMenu/SideMenu";
+import Header from "../components/Header/Header";
 import LoadingBar from "../components/LoadingBar/LoadingBar";
 import { setName } from "../actions/userActions";
 import {
