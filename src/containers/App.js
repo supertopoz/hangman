@@ -35,7 +35,6 @@ class App extends React.Component {
 		    	 )
 		    	}} 
 		    />
-			<User username={this.props.user.name}/>
 			<NotificationContainer/>
 			</div>
 			);
