@@ -7,6 +7,7 @@ import {NotificationContainer} from 'react-notifications';
 import { User } from "../components/User";
 import { Home } from "../components/Home/Home";
 import { About } from "../components/About/About";
+import { Disclaimer } from "../components/Disclaimer/Disclaimer";
 import  SideMenu from "../components/SideMenu/SideMenu";
 import  Header from "../components/Header/Header";
 import LoadingBar from "../components/LoadingBar/LoadingBar";
@@ -26,6 +27,7 @@ class App extends React.Component {
 			<Header/>
 			<LoadingBar/>
             <Route path="/home" component={Home}></Route>
+            <Route path="/disclaimer" component={Disclaimer}></Route>
 		    <Route path="/about" 
 		    	render={()=> {
 		    	 return(

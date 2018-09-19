@@ -1,5 +1,6 @@
 const pageAnimations = (state = {
     loadingBar: false,
+    sideMenu: false,
     lastValues: []
 }, action) => {
     switch (action.type) {
@@ -7,6 +8,13 @@ const pageAnimations = (state = {
             state = {
                 ...state, 
                 loadingBar: action.payload,
+                lastValues: [...state.lastValues, action.payload]
+            } 
+            break;       
+        case "SHOW_SIDE_MENU":
+            state = {
+                ...state, 
+                sideMenu: action.payload,
                 lastValues: [...state.lastValues, action.payload]
             }
             break;

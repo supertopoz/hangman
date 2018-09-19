@@ -11,7 +11,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.js",
-    "test": "jest --coverage --watch"
+    "test": "jest --watch"
   },
   "author": "",
   "license": "ISC",

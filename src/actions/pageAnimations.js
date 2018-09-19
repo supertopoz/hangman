@@ -4,3 +4,10 @@ export function showLoadingBar(display = false) {
         payload: display
     };
 }
+
+export function showSideMenu(display = false) {
+    return {
+        type: "SHOW_SIDE_MENU",
+        payload: display
+    };
+}

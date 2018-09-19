@@ -1,6 +1,9 @@
 import React from "react";
+import {connect} from "react-redux";
 import styled from "styled-components"
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { showSideMenu } from "../../actions/pageAnimations";
+
 
 const Menu = styled.div`
   display: grid;
@@ -8,75 +11,73 @@ const Menu = styled.div`
   margin-left: -10px;
   z-index: 10;
   position: absolute;
-  height: 100%;
-  width: 100%;
-  grid-template-columns: 2fr 10fr;
+  height: 100% !important;
+  z-index: 100;
 `
-
 const MenuHeader = styled.div`
-    height: 65px;
-    background: ghostwhite;
-    border-bottom: 1px solid lightgrey;
+  height: 62px;
+  background: #f5f5f5;
+  border-bottom: 1px solid lightgrey;
 `
-
 const MenuLink = styled.div`
-    margin-left: 10px;
-    padding: 10px;
-    font-size: 1.5rem;
-
+  margin-left: 10px;
+  padding: 10px;
+  font-size: 1.5rem;
 `
-
 const LeftColumn = styled.div`
   background: white;
   z-index: 200;
+  height: 100%;
   box-shadow: 3px 0px 4px #9E9E9E;
 
 `
-
 const RightColumn = styled.div`
   background: transparent;
 `
+let style = hideMenu;
+
+const hideMenu = {
+  WebkitTransition: '-webkit-transform 0.4s linear', 
+  transform: 'translate3d(-40vw, 0, 0)'
+} 
+
+const active = {
+  WebkitTransition: '-webkit-transform 0.4s linear',  
+  width: '150px'
+}
 
 class SideMenu extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            sideMenuVisibility: false
-        }
-    }
 
-    hideMenu (){
-       this.setState({sideMenuVisibility: false});
-    }
-
-    componentDidMount(){
-       if(this.props.menu){
-         this.setState({sideMenuVisibility: true});
-       }
-       
-
-    }
-
-
-    render(){
-    if(this.state.sideMenuVisibility){
+    render(){    
+    this.props.sideMenu? style = active: style = hideMenu;
     return (
 
-        <Menu>
-        <LeftColumn onMouseLeave={(e)=> this.hideMenu()}>
+        <Menu style={style} >
+        <LeftColumn  onMouseLeave={(e)=> this.props.showSideMenu(false)}>
         <MenuHeader/>
         <MenuLink>
-        <Link to="/about" onClick={() => this.hideMenu()}>About</Link>
+        <Link to="/about" onClick={() => this.props.showSideMenu(false)}>About</Link>
         </MenuLink>
         <MenuLink>
-        <Link to="/home" onClick={() => this.hideMenu()}>Home</Link>
+        <Link to="/home" onClick={() => this.props.showSideMenu(false)}>Home</Link>
         </MenuLink>
+        <MenuLink>
+          <Link to="/disclaimer" onClick={() => this.props.showSideMenu(false)}>Disclaimer</Link>
+        </MenuLink>
+
         </LeftColumn>
         </Menu>
     );
-    } 
-    return (<div></div>)
     }
 };
+    const mapStateToProps = (state) => {
+      return { sideMenu: state.pageAnimations.sideMenu };
+    };
 
-export default SideMenu;
+    const mapDispatchToProps = (dispatch) => {
+      return {
+        showSideMenu: (visibility) => { dispatch(showSideMenu(visibility)) }    
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);
