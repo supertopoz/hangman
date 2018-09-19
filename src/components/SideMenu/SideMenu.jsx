@@ -38,7 +38,7 @@ let style = hideMenu;
 
 const hideMenu = {
   WebkitTransition: '-webkit-transform 0.4s linear', 
-  transform: 'translate3d(-40vw, 0, 0)'
+  transform: 'translate3d(-60vw, 0, 0)'
 } 
 
 const active = {
@@ -56,10 +56,13 @@ class SideMenu extends React.Component {
         <LeftColumn  onMouseLeave={(e)=> this.props.showSideMenu(false)}>
         <MenuHeader/>
         <MenuLink>
-        <Link to="/about" onClick={() => this.props.showSideMenu(false)}>About</Link>
+        <Link to="/" onClick={() => this.props.showSideMenu(false)}>Home</Link>
         </MenuLink>
         <MenuLink>
-        <Link to="/home" onClick={() => this.props.showSideMenu(false)}>Home</Link>
+          <Link to="/hangman" onClick={() => this.props.showSideMenu(false)}>Hangman</Link>
+        </MenuLink>
+        <MenuLink>
+        <Link to="/about" onClick={() => this.props.showSideMenu(false)}>About</Link>
         </MenuLink>
         <MenuLink>
           <Link to="/disclaimer" onClick={() => this.props.showSideMenu(false)}>Disclaimer</Link>

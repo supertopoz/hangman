@@ -2,24 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 const MainWrapper = styled.div`
-		max-width: 700px;
-		display: grid;
-		margin: 0 auto;
-		grid-gap:20px;
-		margin-top: 20px;
+    max-width: 700px;
+    display: grid;
+    margin: 0 auto;
+    grid-gap:20px;
+    margin-top: 20px;
 `
 
 const Section = styled.div`
-		border: lightgrey 1px solid;
-		background: ghostwhite;
-		padding: 10px;
-		border-radius: 10px;
-		color:#aa00ff;
+    border: lightgrey 1px solid;
+    background: ghostwhite;
+    padding: 10px;
+    border-radius: 10px;
 `
-
 export const Disclaimer = (props) => {
+
  return (
- 			<MainWrapper>
+      <MainWrapper>
 
       
       <Section>
@@ -27,8 +26,8 @@ export const Disclaimer = (props) => {
         By using Hangman.education, you accept these terms of use in full.<br />
         If you disagree with these terms of use or any part of them, you cannot use this site, and you should exit immediately.<br />
         Hangman.education owners, webmasters and staff are collectively referred to herein as "Hangman.education", "the service", "us" or "we". <br />
-			</Section>
-			<Section>        
+      </Section>
+      <Section>        
         <h3>Disclaimer</h3>
         <ul>
           <li>There is no warranty of any kind. Consider Hangman.education as an "As is" service.</li>

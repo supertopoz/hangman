@@ -11,7 +11,7 @@ configure({ adapter: new Adapter() });
 import { SideMenu } from './SideMenu';
 
 describe('SideMenu', () => {
-  const app = shallow(<SideMenu />);
+  const app = shallow(<Provider store={store}><SideMenu /></Provider>);
   it('renders the side menu', () => {
     expect(app).toMatchSnapshot();
   });

@@ -3,14 +3,54 @@
 exports[`Home is rendered 1`] = `
 initialize {
   "0": Object {
-    "attribs": Object {},
+    "attribs": Object {
+      "class": "sc-bdVaJa jTpBQu",
+    },
     "children": Array [
       Object {
-        "data": "Homepage",
+        "attribs": Object {
+          "class": "sc-bwzfXH caKEmO",
+        },
+        "children": Array [
+          Object {
+            "attribs": Object {
+              "class": "sc-htpNat kUaJNf",
+            },
+            "children": Array [
+              Object {
+                "data": "HANGMAN FOR EDUCATION",
+                "next": null,
+                "parent": [Circular],
+                "prev": null,
+                "type": "text",
+              },
+            ],
+            "name": "div",
+            "namespace": "http://www.w3.org/1999/xhtml",
+            "next": null,
+            "parent": [Circular],
+            "prev": null,
+            "type": "tag",
+            "x-attribsNamespace": Object {
+              "class": undefined,
+            },
+            "x-attribsPrefix": Object {
+              "class": undefined,
+            },
+          },
+        ],
+        "name": "div",
+        "namespace": "http://www.w3.org/1999/xhtml",
         "next": null,
         "parent": [Circular],
         "prev": null,
-        "type": "text",
+        "type": "tag",
+        "x-attribsNamespace": Object {
+          "class": undefined,
+        },
+        "x-attribsPrefix": Object {
+          "class": undefined,
+        },
       },
     ],
     "name": "div",
@@ -33,8 +73,12 @@ initialize {
       "x-attribsPrefix": Object {},
     },
     "type": "tag",
-    "x-attribsNamespace": Object {},
-    "x-attribsPrefix": Object {},
+    "x-attribsNamespace": Object {
+      "class": undefined,
+    },
+    "x-attribsPrefix": Object {
+      "class": undefined,
+    },
   },
   "_root": [Circular],
   "length": 1,
