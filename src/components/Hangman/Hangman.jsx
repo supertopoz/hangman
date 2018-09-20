@@ -1,8 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-import { addWords } from "../../actions/hangmanActions";
-
+import * as actions from "../../actions/hangmanActions";
 
 const MainWrapper = styled.div`
 
@@ -47,7 +46,8 @@ const DiscardedLetters = styled.div`
 `
 
 const HangmanView = styled.div`
-
+    background: blue;
+    color:white;
 `
 
 const AlphabetSection = styled.div`
@@ -91,27 +91,38 @@ const Letter = styled.div`
 const alphatbet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 class Hangman extends React.Component {
+    constructor(){
+      super()
 
+    }
 
   componentDidMount(){
-    const wordList = ['apple','bat','cat'];
-
-    this.props.addWords(wordList)
+    const wordList = ['APPLE','BAT','CAT'];
+    this.props.reset();
+    this.props.addWords(wordList);
+    this.props.wordFromList(1);
+    this.props.convertWordToDashes()
   }
 
   render(){
-    console.log('Hangman props',this.props)
     return (
     <div>
     <Options><i className="material-icons">settings</i></Options>
     <MainWrapper>
       <ScreenSection>
-      <HangmanView></HangmanView>
-      <DiscardedLetters>Not Found: A,B,C,D,E,F,B</DiscardedLetters>  
+      <HangmanView>
+        {this.props.hangman.semiCompleteWord}
+      </HangmanView>
+      <DiscardedLetters>Not Found: {JSON.stringify(this.props.hangman.incorrectLetters) }</DiscardedLetters>  
       </ScreenSection>
       <AlphabetSection>        
       {alphatbet.map((item, index)=>{
-      return  <Letter key={`letter-${index}`}>{item}</Letter>  
+      return  <Letter 
+        onClick={()=> {
+          this.props.getLetter(item);
+          this.props.letterCheckInsert()
+        }} 
+        key={`letter-${index}`}>{item}</Letter>  
       })}
       </AlphabetSection>
     </MainWrapper>
@@ -126,7 +137,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWords: (word) => { dispatch(addWords(word)) }    
+    addWords: (word) => { dispatch(actions.addWords(word)) },
+    reset: () => { dispatch(actions.reset()) },    
+    wordFromList: (wordIndex) => { dispatch(actions.wordFromList(wordIndex)) },    
+    convertWordToDashes: (currentWord) => { dispatch(actions.convertWordToDashes(currentWord)) },    
+    getLetter: (letter) => { dispatch(actions.getLetter(letter)) },   
+    letterCheckInsert: () => { dispatch(actions.letterCheckInsert()) }    
   };
 };
 
