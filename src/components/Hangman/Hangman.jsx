@@ -116,7 +116,7 @@ class Hangman extends React.Component {
       <DiscardedLetters>Not Found: {JSON.stringify(this.props.hangman.incorrectLetters) }</DiscardedLetters>  
       </ScreenSection>
       <AlphabetSection>        
-      {alphatbet.map((item, index)=>{
+      {this.props.hangman.availableLetters.map((item, index)=>{
       return  <Letter 
         onClick={()=> {
           this.props.getLetter(item);

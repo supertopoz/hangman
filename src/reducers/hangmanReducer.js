@@ -4,6 +4,7 @@ const initialState = {
     currentLetter: '',
     semiCompleteWord: '',
     incorrectLetters: [],
+    availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 }
 
 const addWords = (state, action) => {
@@ -25,7 +26,10 @@ const convertWordToDashes = (state) => {
 }
 
 const getLetter = (state, action) => {
-  return { ...state, currentLetter: action.payload }
+  const letterLocation = state.availableLetters.indexOf(action.payload);
+  const letters = state.availableLetters;
+  letters.splice(letterLocation,1,'#');
+  return { ...state, currentLetter: action.payload, availableLetters: letters }
 }
 
 const sliceInletters = (target, current, letter) => {

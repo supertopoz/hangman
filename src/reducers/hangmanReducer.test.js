@@ -7,6 +7,7 @@ const initialState = {
         currentLetter: '',
         semiCompleteWord: '',
         incorrectLetters: [],
+        availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
       }
 
  const targetStateAddWords = {
@@ -15,6 +16,7 @@ const initialState = {
         currentLetter: '',
         semiCompleteWord: '',
         incorrectLetters: [],
+        availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
       } 
 
 
@@ -54,9 +56,11 @@ describe('hangman reducer', () => {
   it('should handle GET_LETTER', ()=>{
     const initialState = {
       currentLetter: '',
+      availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     }
     const targetState = {
       currentLetter: 'A',
+      availableLetters: ["#","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     }
     expect( hangman( initialState, { type: 'GET_LETTER', payload: 'A' } ))
     .toEqual(targetState)  
