@@ -4,6 +4,8 @@ const initialState = {
     currentLetter: '',
     semiCompleteWord: '',
     incorrectLetters: [],
+    currentWordIndex: 0,
+    reachedEndofList: false,
     availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 }
 
@@ -16,7 +18,7 @@ const reset = (state, action) => {
 }
 
 const wordFromList = (state, action) => { 
-  return { ...state, word: state.wordList[action.payload] }
+  return { ...state, word: state.wordList[action.payload] ,currentWordIndex: action.payload }
 }
 
 const convertWordToDashes = (state) => {
@@ -38,18 +40,23 @@ const sliceInletters = (target, current, letter) => {
   return newCurrent.join('');
 }
 
+
 const letterCheckInsert = (state) => {
   let newWord = sliceInletters(
     state.word, 
     state.semiCompleteWord, 
     state.currentLetter
   );
-  
+
   if(state.word.indexOf(state.currentLetter) < 0){
     return { ...state, incorrectLetters : [...state.incorrectLetters, state.currentLetter]}
   }
 
   return { ...state, semiCompleteWord : newWord }
+}
+
+const reacherEnd = (state, action) => {
+  return { ...state, reachedEndofList: action.payload } 
 }
 
 
@@ -62,6 +69,8 @@ const hangman = (state = initialState , action) => {
         case "CONVERT_WORD_TO_DASHES": return convertWordToDashes(state, action)        
         case "GET_LETTER": return getLetter(state, action)        
         case "LETTER_CHECK_INSERT": return letterCheckInsert(state, action)        
+        case "LETTER_CHECK_INSERT": return letterCheckInsert(state, action)        
+        case "REACHED_END_OF_LIST": return reacherEnd(state, action)        
         
         break;
     }

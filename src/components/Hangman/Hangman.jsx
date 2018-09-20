@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
+import AlphabetSection from "./AlphabetSection";
+
 
 const MainWrapper = styled.div`
 
@@ -34,8 +36,6 @@ const ScreenSection = styled.div`
     padding: 10px;
     border-radius: 10px;
     height:300px;
-
-
 `
 
 const DiscardedLetters = styled.div`
@@ -45,46 +45,6 @@ const DiscardedLetters = styled.div`
   font-size: 1rem;
   text-align:center;
 `
-
-
-
-const AlphabetSection = styled.div`
-    display:grid;
-    border: lightgrey 1px solid;
-    background: ghostwhite;
-    padding: 10px;
-    border-radius: 10px;
-    grid-gap: 5px;
-    cursor:pointer;
-    @media only screen and (min-width: 320px)  { 
-      grid-template-columns: repeat(7, 1fr)
-    }
-    @media only screen and (min-width: 768px)  {   
-      grid-template-columns: repeat(6, 1fr)
-    } 
-    @media only screen and (min-width: 1024px) { 
-      grid-template-columns: repeat(5, 1fr)
-    }
-
-
-`
-const Letter = styled.div`
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid;
-    background: #aa00ff;
-    padding: 10px;
-    color: white;
-    border-radius: 10px;
-    text-align: center;
-
-    &:hover{
-      background: white;
-      color:#aa00ff;
-      border: 1px solid;
-    }
- `
 
 const HangmanView = styled.div`
   display: grid;
@@ -113,14 +73,6 @@ class Hangman extends React.Component {
 
     }
 
-  componentDidMount(){
-    const wordList = ['APPLE','BAT','CAT'];
-    this.props.reset();
-    this.props.addWords(wordList);
-    this.props.wordFromList(1);
-    this.props.convertWordToDashes()
-  }
-
   render(){
     return (
     <div>
@@ -130,35 +82,15 @@ class Hangman extends React.Component {
       <HangmanView>
         <HangmanViewImage>
         </HangmanViewImage>
-        <HangmanViewWords>
-        {this.props.hangman.semiCompleteWord}
-        </HangmanViewWords>
-        <DiscardedLetters>{this.props.hangman.incorrectLetters.map((item,index) => {
-        return <span key={`item-${index}`}> { item } </span>
-      })}
+        <HangmanViewWords>{this.props.hangman.semiCompleteWord}</HangmanViewWords>
+        <DiscardedLetters>
+          {this.props.hangman.incorrectLetters.map((item,index) => {
+            return <span key={`item-${index}`}> { item } </span>
+          })}
       </DiscardedLetters>  
       </HangmanView>
-
       </ScreenSection>
-      <AlphabetSection>        
-      {this.props.hangman.availableLetters.map((item, index)=>{
-      return  <Letter 
-        onClick={()=> {
-          if(item !== '#'){
-            this.props.getLetter(item);
-            this.props.letterCheckInsert();
-            if(this.props.hangman.incorrectLetters.length >= 10){
-              this.props.reset();              
-              const wordList = ['APPLE','BAT','CAT'];
-              this.props.addWords(wordList);
-              this.props.wordFromList(1);
-              this.props.convertWordToDashes()
-            }
-          }
-        }} 
-        key={`letter-${index}`}>{item}</Letter>  
-      })}
-      </AlphabetSection>
+      <AlphabetSection/>        
     </MainWrapper>
     </div>
     );

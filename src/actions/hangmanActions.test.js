@@ -31,5 +31,9 @@ describe('hangman actions', () => {
   it('should create an action to check letters against the word', () => {
     const expectedAction = { type: "LETTER_CHECK_INSERT", payload: true }
     expect(actions.letterCheckInsert()).toEqual(expectedAction)
+  })
+  it('should create an action to handle end of list', () => {
+    const expectedAction = { type: "REACHED_END_OF_LIST", payload: true }
+    expect(actions.reachedEnd()).toEqual(expectedAction)
   })  
 })

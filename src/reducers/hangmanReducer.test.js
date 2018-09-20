@@ -7,6 +7,8 @@ const initialState = {
         currentLetter: '',
         semiCompleteWord: '',
         incorrectLetters: [],
+        currentWordIndex: 0,
+        reachedEndofList: false,
         availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
       }
 
@@ -16,6 +18,8 @@ const initialState = {
         currentLetter: '',
         semiCompleteWord: '',
         incorrectLetters: [],
+        currentWordIndex: 0,
+        reachedEndofList: false,
         availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
       } 
 
@@ -34,8 +38,8 @@ describe('hangman reducer', () => {
   })
   
   it('should handle WORD_FROM_LIST', ()=>{
-    const initialState = { word: '', wordList: ['APPLES', 'PEARS']};
-    const targetState = { word: 'PEARS', wordList: ['APPLES', 'PEARS']};
+    const initialState = { word: '', wordList: ['APPLES', 'PEARS'], currentWordIndex: 0};
+    const targetState = { word: 'PEARS', wordList: ['APPLES', 'PEARS'], currentWordIndex: 1};
 
     expect( hangman( initialState, { type: 'WORD_FROM_LIST', payload: 1}))
     .toEqual(targetState)
@@ -100,6 +104,16 @@ describe('hangman reducer', () => {
     expect( hangman( initialState2, { type: 'LETTER_CHECK_INSERT', payload: true } ))
     .toEqual(targetState2)  
 
+  });
+  it('should handle REACHED_END_OF_LIST', ()=>{
+        const initialState = {reachedEndofList: false,}
+        const targetState = {reachedEndofList: true,}
+    expect(
+      hangman(initialState, {
+        type: 'REACHED_END_OF_LIST',
+        payload: true
+      })
+    ).toEqual(targetState)
   });
     it('should handle RESET', ()=>{
     expect(

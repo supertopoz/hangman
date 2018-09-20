@@ -12,7 +12,7 @@ export function reset() {
     };
 }
 
-export function wordFromList(wordIndex = 0) {	
+export function wordFromList(wordIndex) {	
     return {
         type: "WORD_FROM_LIST",
         payload: wordIndex
@@ -33,9 +33,16 @@ export function getLetter(letter = '') {
     };
 }
 
-export function letterCheckInsert() {	
+export function letterCheckInsert() {   
     return {
         type: "LETTER_CHECK_INSERT",
+        payload: true
+    };
+}
+
+export function reachedEnd() {	
+    return {
+        type: "REACHED_END_OF_LIST",
         payload: true
     };
 }
