@@ -65,7 +65,7 @@ const HangmanViewWords = styled.div`
   display:flex;
   align-items: center;
   justify-content: center;
-  background: lightgreen;
+  
   text-align:center;
   font-size: 2rem;
   color:#aa00ff;
@@ -79,8 +79,11 @@ class Hangman extends React.Component {
 
   render(){
     let semiCompleteWord = this.props.hangman.semiCompleteWord
+    
+    let divStyle = {backgroundColor: "lightgreen"}
     if(this.props.hangman.incorrectLetters.length >= 10){
       semiCompleteWord = this.props.hangman.word
+      divStyle = {backgroundColor: "red", color: "white"}
     }
     return (
     <div>
@@ -91,7 +94,7 @@ class Hangman extends React.Component {
         <HangmanViewImage>
         <img src={images[this.props.hangman.incorrectLetters.length]} alt="hangman image"/>
         </HangmanViewImage>
-        <HangmanViewWords>{ semiCompleteWord }</HangmanViewWords>
+        <HangmanViewWords style={divStyle}>{ semiCompleteWord }</HangmanViewWords>
         <DiscardedLetters>
           {this.props.hangman.incorrectLetters.map((item,index) => {
             return <span key={`item-${index}`}> { item } </span>
