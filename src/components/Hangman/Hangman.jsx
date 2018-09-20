@@ -34,21 +34,19 @@ const ScreenSection = styled.div`
     padding: 10px;
     border-radius: 10px;
     height:300px;
-    grid-template-rows: 7fr 1fr;
+
 
 `
 
 const DiscardedLetters = styled.div`
-  background: #424242
-  color: white;
-  padding: 10px;
-  border-radius: 10px;   
+  background: lightpink;
+  color: #aa00ff;
+  padding: 5px;
+  font-size: 1rem;
+  text-align:center;
 `
 
-const HangmanView = styled.div`
-    background: blue;
-    color:white;
-`
+
 
 const AlphabetSection = styled.div`
     display:grid;
@@ -70,17 +68,17 @@ const AlphabetSection = styled.div`
 
 
 `
-
 const Letter = styled.div`
     display:flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid;
     background: #aa00ff;
     padding: 10px;
     color: white;
     border-radius: 10px;
     text-align: center;
-    align-items: center;
-    justify-content: center;
+
     &:hover{
       background: white;
       color:#aa00ff;
@@ -88,7 +86,26 @@ const Letter = styled.div`
     }
  `
 
-const alphatbet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const HangmanView = styled.div`
+  display: grid;
+  background: blue;
+  color:white;
+  grid-template-columns: 1fr;
+  grid-template-rows: 7fr 2fr 1fr;
+
+`
+
+const HangmanViewImage = styled.div``
+const HangmanViewWords = styled.div`
+  letter-spacing: 10px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background: lightgreen;
+  text-align:center;
+  font-size: 2rem;
+  color:#aa00ff;
+`
 
 class Hangman extends React.Component {
     constructor(){
@@ -111,16 +128,33 @@ class Hangman extends React.Component {
     <MainWrapper>
       <ScreenSection>
       <HangmanView>
+        <HangmanViewImage>
+        </HangmanViewImage>
+        <HangmanViewWords>
         {this.props.hangman.semiCompleteWord}
+        </HangmanViewWords>
+        <DiscardedLetters>{this.props.hangman.incorrectLetters.map((item,index) => {
+        return <span key={`item-${index}`}> { item } </span>
+      })}
+      </DiscardedLetters>  
       </HangmanView>
-      <DiscardedLetters>Not Found: {JSON.stringify(this.props.hangman.incorrectLetters) }</DiscardedLetters>  
+
       </ScreenSection>
       <AlphabetSection>        
       {this.props.hangman.availableLetters.map((item, index)=>{
       return  <Letter 
         onClick={()=> {
-          this.props.getLetter(item);
-          this.props.letterCheckInsert()
+          if(item !== '#'){
+            this.props.getLetter(item);
+            this.props.letterCheckInsert();
+            if(this.props.hangman.incorrectLetters.length >= 10){
+              this.props.reset();              
+              const wordList = ['APPLE','BAT','CAT'];
+              this.props.addWords(wordList);
+              this.props.wordFromList(1);
+              this.props.convertWordToDashes()
+            }
+          }
         }} 
         key={`letter-${index}`}>{item}</Letter>  
       })}

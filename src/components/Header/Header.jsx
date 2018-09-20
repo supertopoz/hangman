@@ -8,10 +8,15 @@ import { showSideMenu } from "../../actions/pageAnimations";
 const FixedHeader = styled.div`
   display: grid;
   grid-gap:10px;
-  grid-template-columns: 1fr 5fr 10fr;
+  grid-template-columns: 1fr 10fr;
   background: white;
   padding: 7px;
   border-bottom: 1px solid lightgrey;
+`
+
+const Heading = styled.div`
+  text-align:left;
+  padding-top: 5px;
 `
 
 const Menu = styled.div`
@@ -29,7 +34,7 @@ class Header extends React.Component {
         <FixedHeader>
           { console.log('These are props for the header:', this.props)}
           <Menu onClick={()=> this.props.showSideMenu(true)}><i className="material-icons">menu</i></Menu>                
-          <Link to="/">HANGMAN FOR EDUCATION</Link>
+          <Link to="/"><Heading>HANGMAN FOR EDUCATION</Heading></Link>
           
           <div></div>
           <Link to="/about">

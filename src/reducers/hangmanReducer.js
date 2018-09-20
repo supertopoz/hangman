@@ -27,7 +27,7 @@ const convertWordToDashes = (state) => {
 
 const getLetter = (state, action) => {
   const letterLocation = state.availableLetters.indexOf(action.payload);
-  const letters = state.availableLetters;
+  const letters = Object.assign([],state.availableLetters);
   letters.splice(letterLocation,1,'#');
   return { ...state, currentLetter: action.payload, availableLetters: letters }
 }
