@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
 import AlphabetSection from "./AlphabetSection";
-
+import {images }from "./images";
 
 const MainWrapper = styled.div`
 
@@ -48,14 +48,18 @@ const DiscardedLetters = styled.div`
 
 const HangmanView = styled.div`
   display: grid;
-  background: blue;
   color:white;
   grid-template-columns: 1fr;
   grid-template-rows: 7fr 2fr 1fr;
 
 `
 
-const HangmanViewImage = styled.div``
+const HangmanViewImage = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background: #6200e9;
+`
 const HangmanViewWords = styled.div`
   letter-spacing: 10px;
   display:flex;
@@ -74,6 +78,10 @@ class Hangman extends React.Component {
     }
 
   render(){
+    let semiCompleteWord = this.props.hangman.semiCompleteWord
+    if(this.props.hangman.incorrectLetters.length >= 10){
+      semiCompleteWord = this.props.hangman.word
+    }
     return (
     <div>
     <Options><i className="material-icons">settings</i></Options>
@@ -81,8 +89,9 @@ class Hangman extends React.Component {
       <ScreenSection>
       <HangmanView>
         <HangmanViewImage>
+        <img src={images[this.props.hangman.incorrectLetters.length]} alt="hangman image"/>
         </HangmanViewImage>
-        <HangmanViewWords>{this.props.hangman.semiCompleteWord}</HangmanViewWords>
+        <HangmanViewWords>{ semiCompleteWord }</HangmanViewWords>
         <DiscardedLetters>
           {this.props.hangman.incorrectLetters.map((item,index) => {
             return <span key={`item-${index}`}> { item } </span>
