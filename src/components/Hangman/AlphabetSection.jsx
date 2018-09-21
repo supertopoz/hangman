@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     border-radius: 10px;
     grid-gap: 5px;
     cursor:pointer;
+    grid-template-rows: auto;
     @media only screen and (min-width: 320px)  { 
       grid-template-columns: repeat(7, 1fr)
     }
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
       grid-template-columns: repeat(5, 1fr)
     }
 `
-const Letter = styled.div`
+const Button = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
@@ -31,6 +32,7 @@ const Letter = styled.div`
     color: white;
     border-radius: 10px;
     text-align: center;
+    max-height: 25px;
     &:hover{
       background: white;
       color:#aa00ff;
@@ -38,88 +40,93 @@ const Letter = styled.div`
     }
  `
 
-const NextButton = styled.div`
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid;
-    background: #aa00ff;
-    color: white;
-    height: 50px;
-    padding-left:5px;
-    padding-right:5px;
-    border-radius: 10px;
-    text-align: center;
-    gird-column: 2;
-    &:hover{
-      background: white;
-      color:#aa00ff;
-      border: 1px solid;
-    }
+const WordList = styled.textarea`
+    max-height: 42px;
+    width: 200px;
 `
-
 
 class AlphabetSection extends React.Component {
 
-  reset(){
-    const wordList = ['APPLE','BAT','CAT'];
-    const word = this.props.hangman.currentWordIndex + 1
-    if(word >= wordList.length){
-      this.props.reachedEnd();
-    } else {
-    this.props.reset();
-    this.props.addWords(wordList);
-    this.props.wordFromList(word);
-    this.props.convertWordToDashes()
+
+  softStart(){
+    const wordList = window.localStorage.getItem('words');
+    this.props.addWords(JSON.parse(wordList));
   }
+
+   componentDidMount(){
+     this.softStart();
+   }
+
+   handleChange(e){
+    let words = e.target.value.toUpperCase().split(',')
+
+    window.localStorage.setItem('words', JSON.stringify(words));
+    this.props.addWords(words)
+   }
+
+   reset(resetPosition){
+    const wordList = window.localStorage.getItem('words');
+    // locally stored words. 
+    this.props.reset();
+    this.props.addWords(JSON.parse(wordList));
+    this.props.wordFromList(resetPosition);
+    this.props.convertWordToDashes()
+   }
+
+   selectButton(){
+    const words = window.localStorage.getItem('words');
+    const wordList = JSON.parse(words)
+    // locally stored words.
+    const word = this.props.hangman.currentWordIndex + 1
+    word >= wordList.length? this.props.reachedEnd() : this.reset(word);
   }
 
   start(){
-    const wordList = ['APPLE','BAT','CAT'];
-    this.props.reset();
-    this.props.addWords(wordList);
-    this.props.wordFromList(0);
-    this.props.convertWordToDashes()
+    this.reset(0)
   }
 
   render(){
-    
     if(this.props.hangman.reachedEndofList){
-      return (<Wrapper><NextButton
-        onClick={()=> this.start()}
-        >RESTART</NextButton></Wrapper>
+      return (<Wrapper><Button
+        onClick={()=> this.reset(resetPosition)}
+        >RESTART</Button>
+        <Button
+        onClick={()=> this.reset(0)}
+        >FINISH</Button>
+        </Wrapper>
       )
     }
 
     if(this.props.hangman.word === '' ){
-      return (<Wrapper><NextButton
+      return (<Wrapper><Button
         onClick={()=> this.start()}
-        >START</NextButton></Wrapper>
+        >START</Button>
+        <WordList value={ this.props.hangman.wordList.join(',')} onChange={this.handleChange.bind(this)}/>
+        </Wrapper>
       )
     }
 
     if(this.props.hangman.word === this.props.hangman.semiCompleteWord ||this.props.hangman.incorrectLetters.length >= 10){
-      return (<Wrapper><NextButton
-        onClick={()=> this.reset()}
-        >NEXT</NextButton></Wrapper>
+      return (<Wrapper><Button
+        onClick={()=> this.selectButton()}
+        >NEXT</Button></Wrapper>
       )
     }
 
     return (
       <Wrapper>        
-      { this.props.hangman.availableLetters.map((item, index)=>{
-
-        return  <Letter onClick={()=> {
-          if(item !== '#'){
-            this.props.getLetter(item);
-            this.props.letterCheckInsert()
-          }
-        }} 
-        key={`letter-${index}`}
-        >
-        {item}
-        </Letter>  
-      })}
+        { this.props.hangman.availableLetters.map((item, index)=>{
+          return  <Button onClick={()=> {
+            if(item !== '#'){
+              this.props.getLetter(item);
+              this.props.letterCheckInsert()
+            }
+          }} 
+          key={`letter-${index}`}
+          >{item}
+          </Button>  
+          })
+        }
       </Wrapper>
     );
   }

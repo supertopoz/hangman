@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
 import AlphabetSection from "./AlphabetSection";
+import HangmanViewDiscardedLetters from "./HangmanViewDiscardedLetters";
 import {images }from "./images";
 
 const MainWrapper = styled.div`
@@ -36,14 +37,6 @@ const ScreenSection = styled.div`
     padding: 10px;
     border-radius: 10px;
     height:300px;
-`
-
-const DiscardedLetters = styled.div`
-  background: lightpink;
-  color: #aa00ff;
-  padding: 5px;
-  font-size: 1rem;
-  text-align:center;
 `
 
 const HangmanView = styled.div`
@@ -92,14 +85,10 @@ class Hangman extends React.Component {
       <ScreenSection>
       <HangmanView>
         <HangmanViewImage>
-        <img src={images[this.props.hangman.incorrectLetters.length]} alt="hangman image"/>
+          <img src={images[this.props.hangman.incorrectLetters.length]} alt="hangman image"/>
         </HangmanViewImage>
         <HangmanViewWords style={divStyle}>{ semiCompleteWord }</HangmanViewWords>
-        <DiscardedLetters>
-          {this.props.hangman.incorrectLetters.map((item,index) => {
-            return <span key={`item-${index}`}> { item } </span>
-          })}
-      </DiscardedLetters>  
+        <HangmanViewDiscardedLetters/>
       </HangmanView>
       </ScreenSection>
       <AlphabetSection/>        
