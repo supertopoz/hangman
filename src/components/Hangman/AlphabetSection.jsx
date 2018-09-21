@@ -43,13 +43,28 @@ const Button = styled.div`
 const WordList = styled.textarea`
     max-height: 42px;
     width: 200px;
+    border: 0;
+    background: white no-repeat;
+    background-image: linear-gradient(to bottom, #aa00ff, #aa00ff), linear-gradient(to bottom, silver, silver);
+    background-size: 0 2px, 100% 1px;
+    background-position: 50% 100%, 50% 100%;
+    transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+    &:focus{
+      background-size: 100% 2px, 100% 1px;
+      outline: none;
+    }
 `
+
 
 class AlphabetSection extends React.Component {
 
 
   softStart(){
-    const wordList = window.localStorage.getItem('words');
+    let wordList = window.localStorage.getItem('words');
+    if(wordList === null){
+      wordList = JSON.stringify(["EXAMPLE","EXAMPLE"]);
+      window.localStorage.setItem('words', wordList);
+    }
     this.props.addWords(JSON.parse(wordList));
   }
 
@@ -57,9 +72,13 @@ class AlphabetSection extends React.Component {
      this.softStart();
    }
 
+   resetFromToBegining(){
+    this.props.reset();
+    this.softStart();
+   }
+
    handleChange(e){
     let words = e.target.value.toUpperCase().split(',')
-
     window.localStorage.setItem('words', JSON.stringify(words));
     this.props.addWords(words)
    }
@@ -88,10 +107,10 @@ class AlphabetSection extends React.Component {
   render(){
     if(this.props.hangman.reachedEndofList){
       return (<Wrapper><Button
-        onClick={()=> this.reset(resetPosition)}
+        onClick={()=> this.reset(0)}
         >RESTART</Button>
         <Button
-        onClick={()=> this.reset(0)}
+        onClick={()=> this.resetFromToBegining()}
         >FINISH</Button>
         </Wrapper>
       )
