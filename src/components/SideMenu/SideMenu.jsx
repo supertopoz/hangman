@@ -62,9 +62,6 @@ class SideMenu extends React.Component {
           <Link to="/hangman" onClick={() => this.props.showSideMenu(false)}>Hangman</Link>
         </MenuLink>
         <MenuLink>
-        <Link to="/about" onClick={() => this.props.showSideMenu(false)}>About</Link>
-        </MenuLink>
-        <MenuLink>
           <Link to="/disclaimer" onClick={() => this.props.showSideMenu(false)}>Disclaimer</Link>
         </MenuLink>
 

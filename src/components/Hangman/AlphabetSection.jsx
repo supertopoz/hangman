@@ -7,7 +7,7 @@ const Wrapper = styled.div`
     display:grid;
     border: lightgrey 1px solid;
     background: ghostwhite;
-    padding: 10px;
+    padding: 2%;
     border-radius: 10px;
     grid-gap: 5px;
     cursor:pointer;
@@ -42,7 +42,7 @@ const Button = styled.div`
 
 const WordList = styled.textarea`
     max-height: 42px;
-    width: 200px;
+    width: 400%;
     border: 0;
     background: white no-repeat;
     background-image: linear-gradient(to bottom, #aa00ff, #aa00ff), linear-gradient(to bottom, silver, silver);

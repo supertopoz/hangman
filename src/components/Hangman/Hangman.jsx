@@ -4,12 +4,13 @@ import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
 import AlphabetSection from "./AlphabetSection";
 import HangmanViewDiscardedLetters from "./HangmanViewDiscardedLetters";
-import {images }from "./images";
+import {images } from "./images";
 
 const MainWrapper = styled.div`
-
+    
     display: grid;
     margin: 0 auto;
+    margin-top: 10px;
     grid-gap:20px;
     @media only screen and (min-width: 320px)  { 
       grid-template-columns: 1fr;
@@ -25,28 +26,20 @@ const MainWrapper = styled.div`
     }
 `
 
-const Options = styled.div`
-    text-align: right;
-    padding: 2px;
-`
-
 const ScreenSection = styled.div`
     display: grid;
     border: lightgrey 1px solid;
     background: ghostwhite;
-    padding: 10px;
+    padding: 2%;
     border-radius: 10px;
-    height:300px;
 `
 
 const HangmanView = styled.div`
   display: grid;
-  color:white;
   grid-template-columns: 1fr;
   grid-template-rows: 7fr 2fr 1fr;
 
 `
-
 const HangmanViewImage = styled.div`
   display:flex;
   align-items: center;
@@ -58,11 +51,15 @@ const HangmanViewWords = styled.div`
   display:flex;
   align-items: center;
   justify-content: center;
-  
   text-align:center;
   font-size: 2rem;
   color:#aa00ff;
 `
+
+const Image = styled.img`
+  width: 80%;
+`
+
 
 class Hangman extends React.Component {
     constructor(){
@@ -73,19 +70,21 @@ class Hangman extends React.Component {
   render(){
     let semiCompleteWord = this.props.hangman.semiCompleteWord
     
-    let divStyle = {backgroundColor: "lightgreen"}
+    let divStyle = {backgroundColor: "white"}
     if(this.props.hangman.incorrectLetters.length >= 10){
       semiCompleteWord = this.props.hangman.word
-      divStyle = {backgroundColor: "red", color: "white"}
+      divStyle = {backgroundColor: "#ff1744", color: "white"}
+    }
+    if(this.props.hangman.word === this.props.hangman.semiCompleteWord){
+     divStyle = {backgroundColor: "#b2ff59"}
     }
     return (
     <div>
-    <Options><i className="material-icons">settings</i></Options>
     <MainWrapper>
       <ScreenSection>
       <HangmanView>
         <HangmanViewImage>
-          <img src={images[this.props.hangman.incorrectLetters.length]} alt="hangman image"/>
+          <Image src={images[this.props.hangman.incorrectLetters.length]} alt="hangman image"/>
         </HangmanViewImage>
         <HangmanViewWords style={divStyle}>{ semiCompleteWord }</HangmanViewWords>
         <HangmanViewDiscardedLetters/>

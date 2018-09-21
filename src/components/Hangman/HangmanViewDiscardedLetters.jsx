@@ -6,9 +6,11 @@ import AlphabetSection from "./AlphabetSection";
 import {images }from "./images";
 
 const MainWrapper = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: center;
   background: lightpink;
   color: #aa00ff;
-  padding: 5px;
   font-size: 1rem;
   text-align:center;
 `

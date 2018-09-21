@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {NotificationContainer} from 'react-notifications';
 
 import { Home } from "../components/Home/Home";
-import { About } from "../components/About/About";
 import { Disclaimer } from "../components/Disclaimer/Disclaimer";
 import Hangman from "../components/Hangman/Hangman";
 import SideMenu from "../components/SideMenu/SideMenu";
@@ -26,15 +25,7 @@ class App extends React.Component {
 			<LoadingBar/>
             <Route exact path="/" component={Home}></Route>
             <Route exact path="/hangman" component={Hangman}></Route>
-            
-		    <Route path="/about" 
-		    	render={()=> {
-		    	 return(
-		    	 	<About changeUsername={() => this.props.setName("Anna")}/>
-		    	 )
-		    	}} 
-		    />
-		    <Route path="/disclaimer" component={Disclaimer}></Route>
+            <Route path="/disclaimer" component={Disclaimer}></Route>
 			<NotificationContainer/>
 			</div>
 			);
