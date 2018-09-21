@@ -3,17 +3,17 @@ import styled from "styled-components"
 import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
-		max-width: 700px;
+		width: 80%;
 		display: grid;
 		margin: 0 auto;
 		grid-gap:20px;
-		margin-top: 20px;
+		margin-top: 5%;
 `
 
 const Banner = styled.div`
 		background: ghostwhite;
 		border: 1px solid lightgrey;
-    padding: 40px;
+    padding: 2%;
 		border-radius: 10px;
 		text-align: center;
 `

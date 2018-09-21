@@ -2,17 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const MainWrapper = styled.div`
-    max-width: 700px;
+    width: 95%;
     display: grid;
     margin: 0 auto;
-    grid-gap:20px;
+    grid-gap: 20px;
     margin-top: 20px;
 `
 
 const Section = styled.div`
     border: lightgrey 1px solid;
     background: ghostwhite;
-    padding: 10px;
+    padding: 2%;
     border-radius: 10px;
 `
 export const Disclaimer = (props) => {

@@ -9,7 +9,7 @@ const FixedHeader = styled.div`
   grid-gap:10px;
   grid-template-columns: 1fr 10fr;
   background: white;
-  padding: 7px;
+  padding: 2%;
   border-bottom: 1px solid lightgrey;
 `
 
@@ -33,7 +33,7 @@ class Header extends React.Component {
         <FixedHeader>
           { console.log('These are props for the header:', this.props)}
           <Menu onClick={()=> this.props.showSideMenu(true)}><i className="material-icons">menu</i></Menu>                
-          <Link to="/"><Heading>HANGMAN FOR EDUCATION 0.32</Heading></Link>
+          <Link to="/"><Heading>HANGMAN FOR EDUCATION</Heading></Link>
           
           <div></div>
           <Link to="/about">
