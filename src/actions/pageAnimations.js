@@ -11,3 +11,9 @@ export function showSideMenu(display = false) {
         payload: display
     };
 }
+export function setTabs(tab = 'game') {
+    return {
+        type: "SET_TABS",
+        payload: tab
+    };
+}

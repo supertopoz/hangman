@@ -1,9 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-import * as actions from "../../actions/hangmanActions";
+import * as actions from "../../actions/pageAnimations";
 
 import Game from "./Game";
+import WordList from "./WordList";
 
 const Wrapper = styled.div`
     display:grid;
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
     background: ghostwhite;
     padding: 2%;
     border-radius: 10px;
-    grid-gap: 5px;
+    grid-gap: 10px;
     cursor:pointer;
     grid-template-rows: 1fr 8fr;
     grid-template-columns: 1fr
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
 
 const Tab = styled.div`
     display: grid;
+    grid-gap: 5px
     grid-template-columns: 1fr 1fr 1fr;
 `
 const TabName = styled.div`
@@ -32,24 +34,46 @@ const TabName = styled.div`
     border-top-left-radius: 10px; 
     border-top-right-radius: 10px; 
     width:90%;
-    background: #aa00ff;
-    color: green;
+    background: none;
+    color: #aa00ff;
 `
+
+
+
 
 class Tabs extends React.Component {
 
+  componentDidMount(){
+    this.props.setTabs('game');
+  }
+
+  changeTab(tab){
+    this.props.setTabs(tab);
+  }
+
   render(){
     let view;
-    if(true){
-      view = <Game/>
-
+    let gameTab;
+    let wordListTab;
+    let themesTab;
+    if(this.props.pageAnimations.tab === 'game') {
+      view = <Game /> 
+      gameTab = {backgroundColor: "#aa00ff", color: "white"}
     }
+    if(this.props.pageAnimations.tab === 'wordList'){
+      view = <WordList/>
+      wordListTab = {backgroundColor: "#aa00ff", color: "white"}
+    }
+    if(this.props.pageAnimations.tab === 'themes') {
+      view = <Themes/>
+      themesTab = {backgroundColor: "#aa00ff", color: "white"}
+    }
+
     return (
       <Wrapper>        
         <Tab>
-        <TabName>Game</TabName>
-        <TabName>Word Lists</TabName>
-        <TabName>Themes</TabName>
+        <TabName style={gameTab} onClick={()=> this.changeTab("game")}>Game</TabName>
+        <TabName style={wordListTab} onClick={()=> this.changeTab("wordList")}>Themes</TabName>
         </Tab>
         { view }
       </Wrapper>
@@ -58,18 +82,12 @@ class Tabs extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { hangman: state.hangman };
+  return { pageAnimations: state.pageAnimations };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWords: (word) => { dispatch(actions.addWords(word)) },
-    reset: () => { dispatch(actions.reset()) },    
-    wordFromList: (wordIndex) => { dispatch(actions.wordFromList(wordIndex)) },    
-    convertWordToDashes: (currentWord) => { dispatch(actions.convertWordToDashes(currentWord)) },    
-    getLetter: (letter) => { dispatch(actions.getLetter(letter)) },   
-    letterCheckInsert: () => { dispatch(actions.letterCheckInsert()) },   
-    reachedEnd: () => { dispatch(actions.reachedEnd()) }    
+    setTabs: (word) => { dispatch(actions.setTabs(word)) },  
   };
 };
 

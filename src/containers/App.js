@@ -8,7 +8,7 @@ import Hangman from "../components/Hangman/Hangman";
 import SideMenu from "../components/SideMenu/SideMenu";
 import Header from "../components/Header/Header";
 import LoadingBar from "../components/LoadingBar/LoadingBar";
-import { setName } from "../actions/userActions";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -32,17 +32,4 @@ class App extends React.Component {
 		}
 }
 
-		const mapStateToProps = (state) => {
-			return {
-				user: state.user,
-				math: state.math
-			};
-		};
-
-		const mapDispatchToProps = (dispatch) => {
-			return {
-				setName: (name) => { dispatch(setName(name)) },				
-		};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

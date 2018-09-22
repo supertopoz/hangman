@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
 
+import WordList from "./WordList";
+
 const Wrapper = styled.div`
     display:grid;
     background: ghostwhite;
@@ -20,13 +22,25 @@ const Wrapper = styled.div`
       grid-template-columns: repeat(5, 1fr)
     }
 `
+
+const StartWrapper = styled.div`
+    display:grid;
+    background: ghostwhite;
+    border-radius: 10px;
+    grid-gap: 5px;
+    cursor:pointer;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+
+`
+
 const Button = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
     border: 1px solid;
     background: #aa00ff;
-    padding: 10px;
+    padding: 5px;
     color: white;
     border-radius: 10px;
     text-align: center;
@@ -38,9 +52,9 @@ const Button = styled.div`
     }
  `
 
-const WordList = styled.textarea`
+const WordInput = styled.textarea`
     max-height: 42px;
-    width: 400%;
+    width: 100%;
     border: 0;
     background: white no-repeat;
     background-image: linear-gradient(to bottom, #aa00ff, #aa00ff), linear-gradient(to bottom, silver, silver);
@@ -67,7 +81,6 @@ class Game extends React.Component {
   }
 
    componentDidMount(){
-     this.softStart();
    }
 
    resetFromToBegining(){
@@ -77,15 +90,14 @@ class Game extends React.Component {
 
    handleChange(e){
     let words = e.target.value.toUpperCase().split(',')
-    window.localStorage.setItem('words', JSON.stringify(words));
+    window.localStorage.setItem('words',  JSON.stringify(words));
     this.props.addWords(words)
    }
 
    reset(resetPosition){
-    const wordList = window.localStorage.getItem('words');
-    // locally stored words. 
+    const wordList = this.props.hangman.wordList;
     this.props.reset();
-    this.props.addWords(JSON.parse(wordList));
+    this.props.addWords(wordList);
     this.props.wordFromList(resetPosition);
     this.props.convertWordToDashes()
    }
@@ -116,11 +128,13 @@ class Game extends React.Component {
     }
 
     if(this.props.hangman.word === '' ){
-      return (<Wrapper><Button
-        onClick={()=> this.start()}
-        >START</Button>
-        <WordList value={ this.props.hangman.wordList.join(',')} onChange={this.handleChange.bind(this)}/>
-        </Wrapper>
+      return (
+        <StartWrapper>
+          
+          <WordInput value={ this.props.hangman.wordList.join(',')} onChange={this.handleChange.bind(this)}/>
+          <WordList/>
+          <Button onClick={()=> this.start()}>START</Button>
+        </StartWrapper>
       )
     }
 
@@ -149,6 +163,9 @@ class Game extends React.Component {
           </Button>  
           })
         }
+        <Button
+        onClick={()=> this.resetFromToBegining()}
+        ><i className="material-icons">arrow_back</i></Button>
       </Wrapper>
     );
   }
