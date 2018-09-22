@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
-import AlphabetSection from "./AlphabetSection";
+import Tabs from "./Tabs";
 import HangmanViewDiscardedLetters from "./HangmanViewDiscardedLetters";
 import {images } from "./images";
 
@@ -90,7 +90,7 @@ class Hangman extends React.Component {
         <HangmanViewDiscardedLetters/>
       </HangmanView>
       </ScreenSection>
-      <AlphabetSection/>        
+      <Tabs/>     
     </MainWrapper>
     </div>
     );

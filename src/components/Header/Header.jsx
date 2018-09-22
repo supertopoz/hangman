@@ -9,7 +9,7 @@ const FixedHeader = styled.div`
   grid-gap:10px;
   grid-template-columns: 1fr 10fr;
   background: white;
-  padding: 2%;
+  padding: 7px;
   border-bottom: 1px solid lightgrey;
 `
 

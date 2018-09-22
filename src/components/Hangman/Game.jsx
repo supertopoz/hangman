@@ -5,9 +5,7 @@ import * as actions from "../../actions/hangmanActions";
 
 const Wrapper = styled.div`
     display:grid;
-    border: lightgrey 1px solid;
     background: ghostwhite;
-    padding: 2%;
     border-radius: 10px;
     grid-gap: 5px;
     cursor:pointer;
@@ -56,7 +54,7 @@ const WordList = styled.textarea`
 `
 
 
-class AlphabetSection extends React.Component {
+class Game extends React.Component {
 
 
   softStart(){
@@ -105,6 +103,7 @@ class AlphabetSection extends React.Component {
   }
 
   render(){
+    let view;
     if(this.props.hangman.reachedEndofList){
       return (<Wrapper><Button
         onClick={()=> this.reset(0)}
@@ -125,12 +124,16 @@ class AlphabetSection extends React.Component {
       )
     }
 
+
     if(this.props.hangman.word === this.props.hangman.semiCompleteWord ||this.props.hangman.incorrectLetters.length >= 10){
       return (<Wrapper><Button
         onClick={()=> this.selectButton()}
         >NEXT</Button></Wrapper>
       )
     }
+
+
+
 
     return (
       <Wrapper>        
@@ -168,4 +171,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AlphabetSection);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

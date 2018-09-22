@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
-		width: 80%;
+		width: 90%;
 		display: grid;
 		margin: 0 auto;
 		grid-gap:20px;
@@ -13,19 +13,19 @@ const Wrapper = styled.div`
 const Banner = styled.div`
 		background: ghostwhite;
 		border: 1px solid lightgrey;
-    padding: 2%;
+    padding: 5%;
 		border-radius: 10px;
 		text-align: center;
 `
 
 const Header = styled.div`
   color:#aa00ff;
-  font-size: 3rem; 
+  font-size: 2.5em; 
 `
 
 const Button = styled.div`
     display:flex;
-    width: 20%;
+    width: 25%;
     margin: 0 auto;
     align-items: center;
     justify-content: center;

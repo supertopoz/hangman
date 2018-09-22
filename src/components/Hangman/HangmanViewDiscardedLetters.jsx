@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
 import * as actions from "../../actions/hangmanActions";
-import AlphabetSection from "./AlphabetSection";
 import {images }from "./images";
 
 const MainWrapper = styled.div`
