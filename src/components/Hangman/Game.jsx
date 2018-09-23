@@ -92,11 +92,6 @@ class Game extends React.Component {
     this.props.addWords(words)
    }  
 
-  isMobile() {
-    return (typeof window.matchMedia != 'undefined' || typeof window.msMatchMedia != 'undefined')?
-      window.matchMedia("(pointer:coarse)").matches : false;
-  }
-
   reset(resetPosition){
     const wordList = this.props.hangman.wordList;
     this.props.reset();
@@ -115,7 +110,7 @@ class Game extends React.Component {
     let view;
     let keyboard = <div></div>;
     let textAreaDisable = false;
-    if(this.isMobile()){
+    if(this.props.pageAnimations.isMobile){
       textAreaDisable = true;
       keyboard = (<Keyboard layout={layout} display={display} onChange={e => this.handleChange(e,'mobile')}/>)
     }
@@ -173,7 +168,7 @@ class Game extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  return { hangman: state.hangman };
+  return { hangman: state.hangman, pageAnimations: state.pageAnimations };
 };
 
 const mapDispatchToProps = (dispatch) => {
