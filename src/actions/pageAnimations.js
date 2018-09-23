@@ -17,3 +17,9 @@ export function setTabs(tab = 'game') {
         payload: tab
     };
 }
+export function isMobile(isMobile = false) {
+    return {
+        type: "IS_MOBILE",
+        payload: isMobile
+    };
+}

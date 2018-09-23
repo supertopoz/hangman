@@ -5,6 +5,7 @@ import { words } from "./words"
 import * as actions from "../../actions/hangmanActions";
 import * as pageActions from "../../actions/pageAnimations";
 
+
 const Wrapper = styled.div`
     display:grid;
     background: ghostwhite;
@@ -17,9 +18,11 @@ class WordList extends React.Component {
 
   addWords(category){
     this.props.reset();
-    let myWords = JSON.parse(window.localStorage.getItem('words')) || ['']
+    let myWords = window.localStorage.getItem('words') || ''
+    console.log(myWords)
+    let myNewWords = JSON.parse(myWords)
     category === 'myWords'? 
-        this.props.addWords(myWords): 
+        this.props.addWords(myNewWords): 
         this.props.addWords(words[category]);
   }
 

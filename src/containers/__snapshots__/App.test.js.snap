@@ -14,7 +14,7 @@ ShallowWrapper {
       }
     }
   >
-    <App />
+    <Connect(App) />
   </Provider>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],

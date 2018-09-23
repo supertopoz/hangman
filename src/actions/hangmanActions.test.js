@@ -6,7 +6,6 @@ describe('hangman actions', () => {
     const expectedAction = { type: 'ADD_WORDS', payload: words}
     expect(actions.addWords(words)).toEqual(expectedAction)
   })
-
   it('should create an action reset hangman', () => {
     const expectedAction = { type: 'RESET', payload: true}
     expect(actions.reset()).toEqual(expectedAction)

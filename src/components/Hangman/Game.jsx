@@ -1,8 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-import * as actions from "../../actions/hangmanActions";
+import Keyboard from "react-simple-keyboard";
+import "simple-keyboard/build/css/index.css";
 
+import * as actions from "../../actions/hangmanActions";
 import WordList from "./WordList";
 
 const Wrapper = styled.div`
@@ -67,34 +69,35 @@ const WordInput = styled.textarea`
     }
 `
 
+const layout = {
+  default: [
+    "Q W E R T Y U I O P",
+    "A S D F G H J K L ,",
+    "Z X C V B N M {bksp}",
+    "{space}"
+  ]
+};
+
+const display = {
+  "{bksp}": "DEL",
+  "{space}": " "
+};
 
 class Game extends React.Component {
 
+  handleChange(e, mobile){
+    let words;
+    mobile? words = e.split(','): words = e.target.value.toUpperCase().split(',');
+    window.localStorage.setItem('words', JSON.stringify(words));
+    this.props.addWords(words)
+   }  
 
-  softStart(){
-    let wordList = window.localStorage.getItem('words');
-    if(wordList === null){
-      wordList = JSON.stringify(["EXAMPLE","EXAMPLE"]);
-      window.localStorage.setItem('words', wordList);
-    }
-    this.props.addWords(JSON.parse(wordList));
+  isMobile() {
+    return (typeof window.matchMedia != 'undefined' || typeof window.msMatchMedia != 'undefined')?
+      window.matchMedia("(pointer:coarse)").matches : false;
   }
 
-   componentDidMount(){
-   }
-
-   resetFromToBegining(){
-    this.props.reset();
-    this.softStart();
-   }
-
-   handleChange(e){
-    let words = e.target.value.toUpperCase().split(',')
-    window.localStorage.setItem('words',  JSON.stringify(words));
-    this.props.addWords(words)
-   }
-
-   reset(resetPosition){
+  reset(resetPosition){
     const wordList = this.props.hangman.wordList;
     this.props.reset();
     this.props.addWords(wordList);
@@ -104,50 +107,47 @@ class Game extends React.Component {
 
    selectButton(){
     const words = window.localStorage.getItem('words');
-    const wordList = JSON.parse(words)
-    // locally stored words.
     const word = this.props.hangman.currentWordIndex + 1
-    word >= wordList.length? this.props.reachedEnd() : this.reset(word);
-  }
-
-  start(){
-    this.reset(0)
+    word >= JSON.parse(words).length? this.props.reachedEnd() : this.reset(word);
   }
 
   render(){
     let view;
+    let keyboard = <div></div>;
+    let textAreaDisable = false;
+    if(this.isMobile()){
+      textAreaDisable = true;
+      keyboard = (<Keyboard layout={layout} display={display} onChange={e => this.handleChange(e,'mobile')}/>)
+    }
+
     if(this.props.hangman.reachedEndofList){
-      return (<Wrapper><Button
-        onClick={()=> this.reset(0)}
-        >RESTART</Button>
-        <Button
-        onClick={()=> this.resetFromToBegining()}
-        >FINISH</Button>
+      return (
+        <Wrapper>
+          <Button onClick={()=> this.reset(0)} >RESTART</Button>
+          <Button onClick={()=> this.props.reset()} >FINISH</Button>
         </Wrapper>
       )
     }
 
     if(this.props.hangman.word === '' ){
       return (
-        <StartWrapper>
-          
-          <WordInput value={ this.props.hangman.wordList.join(',')} onChange={this.handleChange.bind(this)}/>
+        <StartWrapper>          
+          <WordInput disabled={ textAreaDisable} value={ this.props.hangman.wordList} onChange={this.handleChange.bind(this)}/>          
           <WordList/>
-          <Button onClick={()=> this.start()}>START</Button>
+          <Button onClick={()=> this.reset(0)}>START</Button>
+          {keyboard}
         </StartWrapper>
       )
     }
 
 
     if(this.props.hangman.word === this.props.hangman.semiCompleteWord ||this.props.hangman.incorrectLetters.length >= 10){
-      return (<Wrapper><Button
-        onClick={()=> this.selectButton()}
-        >NEXT</Button></Wrapper>
+      return (
+        <Wrapper>
+          <Button onClick={()=> this.selectButton()}>NEXT</Button>
+        </Wrapper>
       )
     }
-
-
-
 
     return (
       <Wrapper>        
@@ -164,12 +164,13 @@ class Game extends React.Component {
           })
         }
         <Button
-        onClick={()=> this.resetFromToBegining()}
+        onClick={()=> this.props.reset()}
         ><i className="material-icons">arrow_back</i></Button>
       </Wrapper>
     );
   }
 }
+
 
 const mapStateToProps = (state) => {
   return { hangman: state.hangman };

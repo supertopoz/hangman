@@ -56,7 +56,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.css",
-    "revision": "d8a62f678e4f6ede39f6f75bae8fb1a9"
+    "revision": "77cedf8ae53587138af5e62dd96096ec"
   },
   {
     "url": "index.html",
@@ -64,7 +64,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.js",
-    "revision": "5158e3f37a114bf2fbaf26dc71404fc9"
+    "revision": "16ee4aa72b8c4048f5a576b62f057487"
   },
   {
     "url": "/",
