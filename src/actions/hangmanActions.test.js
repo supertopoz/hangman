@@ -11,6 +11,12 @@ describe('hangman actions', () => {
     expect(actions.reset()).toEqual(expectedAction)
   })
 
+  it('should create an action set the type of word list selected', () => {
+    const expectedAction = { type: 'WORD_LIST_TYPE', payload: 'myWords'}
+    const wordIndex = 1
+    expect(actions.wordListCategory('myWords')).toEqual(expectedAction)
+  })
+
   it('should create an action get a specific word from the list', () => {
     const expectedAction = { type: 'WORD_FROM_LIST', payload: 1}
     const wordIndex = 1

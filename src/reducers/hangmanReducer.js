@@ -6,11 +6,16 @@ const initialState = {
     incorrectLetters: [],
     currentWordIndex: 0,
     reachedEndofList: false,
+    wordListCategory: '',
     availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 }
 
 const addWords = (state, action) => {
   return { ...state, wordList: action.payload}
+}
+
+const wordListCategory = (state, action) => {
+  return { ...state, wordListCategory: action.payload}
 }
 
 const reset = (state, action) => { 
@@ -63,14 +68,15 @@ const reacherEnd = (state, action) => {
 
 const hangman = (state = initialState , action) => {
     switch (action.type) {
-        case "ADD_WORDS": return addWords(state, action)        
+        case "ADD_WORDS": return addWords(state, action)
+        case "WORD_LIST_TYPE": return wordListCategory(state, action)         
         case "RESET": return reset(state, action)        
         case "WORD_FROM_LIST": return wordFromList(state, action)        
         case "CONVERT_WORD_TO_DASHES": return convertWordToDashes(state, action)        
         case "GET_LETTER": return getLetter(state, action)        
-        case "LETTER_CHECK_INSERT": return letterCheckInsert(state, action)        
-        case "LETTER_CHECK_INSERT": return letterCheckInsert(state, action)        
+        case "LETTER_CHECK_INSERT": return letterCheckInsert(state, action)           
         case "REACHED_END_OF_LIST": return reacherEnd(state, action)        
+               
         
         break;
     }

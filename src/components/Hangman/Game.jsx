@@ -6,6 +6,7 @@ import "simple-keyboard/build/css/index.css";
 
 import * as actions from "../../actions/hangmanActions";
 import WordList from "./WordList";
+import { words } from "./words"
 
 const Wrapper = styled.div`
     display:grid;
@@ -86,24 +87,38 @@ const display = {
 class Game extends React.Component {
 
   handleChange(e, mobile){
-    let words;
-    mobile? words = e.split(','): words = e.target.value.toUpperCase().split(',');
-    window.localStorage.setItem('words', JSON.stringify(words));
-    this.props.addWords(words)
+    let newWords;
+    mobile? newWords = e.split(','): newWords = e.target.value.toUpperCase().split(',');
+    window.localStorage.setItem('my_words', JSON.stringify(newWords));
+    this.props.addWords(newWords)
    }  
 
   reset(resetPosition){
     const wordList = this.props.hangman.wordList;
+    const wordListCategory = this.props.hangman.wordListCategory;
     this.props.reset();
     this.props.addWords(wordList);
     this.props.wordFromList(resetPosition);
-    this.props.convertWordToDashes()
+    this.props.wordListCategory(wordListCategory);
+    this.props.convertWordToDashes();
    }
 
    selectButton(){
-    const words = window.localStorage.getItem('words');
-    const word = this.props.hangman.currentWordIndex + 1
-    word >= JSON.parse(words).length? this.props.reachedEnd() : this.reset(word);
+    let newWords = '';
+    let wordLength = 0;
+    if(this.props.hangman.wordListCategory === 'my_words'){
+        newWords = window.localStorage.getItem('my_words');
+        let array = JSON.parse(newWords)
+        wordLength = array.length;
+    } else {
+        console.log('WORD LIST CATEGORY',this.props.hangman.wordListCategory )
+
+        newWords = words[this.props.hangman.wordListCategory];
+        console.log('WORDS',newWords )
+        wordLength = newWords.length;
+    }
+    const word = this.props.hangman.currentWordIndex + 1;
+    word >= wordLength? this.props.reachedEnd() : this.reset(word);
   }
 
   render(){
@@ -176,6 +191,7 @@ const mapDispatchToProps = (dispatch) => {
     addWords: (word) => { dispatch(actions.addWords(word)) },
     reset: () => { dispatch(actions.reset()) },    
     wordFromList: (wordIndex) => { dispatch(actions.wordFromList(wordIndex)) },    
+    wordListCategory: (wordListCategory) => { dispatch(actions.wordListCategory(wordListCategory)) },    
     convertWordToDashes: (currentWord) => { dispatch(actions.convertWordToDashes(currentWord)) },    
     getLetter: (letter) => { dispatch(actions.getLetter(letter)) },   
     letterCheckInsert: () => { dispatch(actions.letterCheckInsert()) },   

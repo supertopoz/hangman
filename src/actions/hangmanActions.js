@@ -5,10 +5,17 @@ export function addWords(words = '') {
     };
 }
 
-export function reset() {	
+export function reset() {   
     return {
         type: "RESET",
         payload: true
+    };
+}
+
+export function wordListCategory(type) {	
+    return {
+        type: "WORD_LIST_TYPE",
+        payload: type
     };
 }
 

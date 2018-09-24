@@ -5,7 +5,6 @@ import { words } from "./words"
 import * as actions from "../../actions/hangmanActions";
 import * as pageActions from "../../actions/pageAnimations";
 
-
 const Wrapper = styled.div`
     display:grid;
     background: ghostwhite;
@@ -18,33 +17,31 @@ class WordList extends React.Component {
 
   addWords(category){
     this.props.reset();
-    let myWords = window.localStorage.getItem('words') || ''
-    console.log(myWords)
+    let myWords = window.localStorage.getItem('my_words') || ''
     let myNewWords = JSON.parse(myWords)
-    category === 'myWords'? 
-        this.props.addWords(myNewWords): 
+    if(category === 'my_words'){
+        this.props.addWords(myNewWords)
+        this.props.wordListCategory('my_words')
+    } else {
         this.props.addWords(words[category]);
+        this.props.wordListCategory(category)
+    }        
   }
 
-  render(){
+  render(){ 
     return (
       <Wrapper>
-        <div onClick={()=> {
-          this.addWords('myWords') 
-          this.props.changeTab('game')}
-        }>
-        My Word List
-        </div>
+        <div onClick={()=> { this.addWords('my_words') }} >My Words</div>
         {Object.keys(words).map((word, index) => {
           return ( 
-          <div key={`word-${index}`} onClick={
-            ()=> {
-            this.addWords(word) 
-            this.props.changeTab('game')
-          }
-          }>
-          {word}
-          </div>)
+            <div key={`word-${index}`} 
+              onClick={()=> {
+                this.addWords(word) 
+                this.props.changeTab('game')
+                }
+              }>
+            {word}
+            </div>)
         })}
       </Wrapper>
     );
@@ -57,6 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    wordListCategory: (type) => { dispatch(actions.wordListCategory(type)) },
     addWords: (word) => { dispatch(actions.addWords(word)) },
     reset: () => { dispatch(actions.reset()) },    
     changeTab: (tab) => { dispatch(pageActions.setTabs(tab)) }, 

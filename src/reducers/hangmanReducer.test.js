@@ -9,6 +9,7 @@ const initialState = {
         incorrectLetters: [],
         currentWordIndex: 0,
         reachedEndofList: false,
+        wordListCategory: '',
         availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
       }
 
@@ -20,6 +21,7 @@ const initialState = {
         incorrectLetters: [],
         currentWordIndex: 0,
         reachedEndofList: false,
+        wordListCategory: '',
         availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
       } 
 
@@ -122,5 +124,15 @@ describe('hangman reducer', () => {
         payload: true
       })
     ).toEqual(initialState)
+  })
+    it('should handle WORD_LIST_TYPE', ()=>{
+        const initialState = { wordListCategory: '',}
+        const targetState = {wordListCategory: 'my_words',}
+    expect(
+      hangman(initialState, {
+        type: 'WORD_LIST_TYPE',
+        payload: 'my_words'
+      })
+    ).toEqual(targetState)
   });
 })
