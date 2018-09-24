@@ -7,8 +7,9 @@ describe('hangman actions', () => {
     expect(actions.addWords(words)).toEqual(expectedAction)
   })
   it('should create an action reset hangman', () => {
-    const expectedAction = { type: 'RESET', payload: true}
-    expect(actions.reset()).toEqual(expectedAction)
+    const expectedAction = { type: 'RESET', payload: ["wordListCategory"]}
+    const payload = ["wordListCategory"]
+    expect(actions.reset(payload)).toEqual(expectedAction)
   })
 
   it('should create an action set the type of word list selected', () => {

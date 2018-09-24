@@ -18,8 +18,15 @@ const wordListCategory = (state, action) => {
   return { ...state, wordListCategory: action.payload}
 }
 
-const reset = (state, action) => { 
-  return { ...initialState }
+const reset = (state, action) => {
+  if(action.payload === undefined){
+    return { ...initialState }
+  }
+  let preservedItems = Object.assign({},initialState);  
+  action.payload.forEach(item =>{
+    preservedItems[item] = state[item]
+  })
+  return { ...preservedItems }
 }
 
 const wordFromList = (state, action) => { 

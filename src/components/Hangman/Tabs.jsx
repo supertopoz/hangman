@@ -14,13 +14,14 @@ const Wrapper = styled.div`
     border-radius: 10px;
     grid-gap: 10px;
     cursor:pointer;
-    grid-template-rows: 1fr 8fr;
+    grid-template-rows: 1fr 10fr;
     grid-template-columns: 1fr
 `
 
 const Tab = styled.div`
     display: grid;
-    grid-gap: 5px
+    grid-gap: 5px;
+    height: 30px;
     grid-template-columns: 1fr 1fr 1fr;
 `
 const TabName = styled.div`
@@ -30,12 +31,11 @@ const TabName = styled.div`
     border-top: 1px solid;
     border-left: 1px solid;
     border-right: 1px solid;
-    padding: 5px;
     border-top-left-radius: 10px; 
     border-top-right-radius: 10px; 
     width:90%;
-    background: none;
-    color: #aa00ff;
+    background:  #aa00ff;
+    color: white;
 `
 
 
@@ -58,15 +58,15 @@ class Tabs extends React.Component {
     let themesTab;
     if(this.props.pageAnimations.tab === 'game') {
       view = <Game /> 
-      gameTab = {backgroundColor: "#aa00ff", color: "white"}
+      gameTab = {backgroundColor: "white", color: "#aa00ff"}
     }
     if(this.props.pageAnimations.tab === 'wordList'){
       view = <WordList/>
-      wordListTab = {backgroundColor: "#aa00ff", color: "white"}
+      wordListTab = {backgroundColor: "white", color: "#aa00ff"}
     }
     if(this.props.pageAnimations.tab === 'themes') {
       view = <Themes/>
-      themesTab = {backgroundColor: "#aa00ff", color: "white"}
+      themesTab = {backgroundColor: "white", color: "#aa00ff"}
     }
 
     return (

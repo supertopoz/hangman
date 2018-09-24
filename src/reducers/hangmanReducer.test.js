@@ -117,14 +117,6 @@ describe('hangman reducer', () => {
       })
     ).toEqual(targetState)
   });
-    it('should handle RESET', ()=>{
-    expect(
-      hangman(targetStateAddWords, {
-        type: 'RESET',
-        payload: true
-      })
-    ).toEqual(initialState)
-  })
     it('should handle WORD_LIST_TYPE', ()=>{
         const initialState = { wordListCategory: '',}
         const targetState = {wordListCategory: 'my_words',}
@@ -135,4 +127,52 @@ describe('hangman reducer', () => {
       })
     ).toEqual(targetState)
   });
+  it('should handle RESET', ()=>{
+     const initialState = {
+        word: 'APPLES',
+        wordList : ['APPLES', 'PEARS'],
+        currentLetter: 'A',
+        semiCompleteWord: 'A-----',
+        incorrectLetters: ["X"],
+        currentWordIndex: 0,
+        reachedEndofList: false,
+        wordListCategory: 'my_words',
+        availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+      }
+     const targetState = {
+        word: '',
+        wordList : ['APPLES', 'PEARS'],
+        currentLetter: '',
+        semiCompleteWord: '',
+        incorrectLetters: [],
+        currentWordIndex: 0,
+        reachedEndofList: false,
+        wordListCategory: 'my_words',
+        availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+      }
+      const targetState2 = {
+        word: '',
+        wordList : [],
+        currentLetter: '',
+        semiCompleteWord: '',
+        incorrectLetters: [],
+        currentWordIndex: 0,
+        reachedEndofList: false,
+        wordListCategory: '',
+        availableLetters: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+      }
+
+    expect(
+      hangman(initialState, {
+        type: 'RESET',
+        payload: ["wordListCategory", "wordList"]
+      })
+    ).toEqual(targetState)
+    expect(
+      hangman(initialState, {
+        type: 'RESET',
+        payload: []
+      })
+    ).toEqual(targetState2)
+  })
 })

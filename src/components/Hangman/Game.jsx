@@ -111,10 +111,7 @@ class Game extends React.Component {
         let array = JSON.parse(newWords)
         wordLength = array.length;
     } else {
-        console.log('WORD LIST CATEGORY',this.props.hangman.wordListCategory )
-
         newWords = words[this.props.hangman.wordListCategory];
-        console.log('WORDS',newWords )
         wordLength = newWords.length;
     }
     const word = this.props.hangman.currentWordIndex + 1;
@@ -134,7 +131,7 @@ class Game extends React.Component {
       return (
         <Wrapper>
           <Button onClick={()=> this.reset(0)} >RESTART</Button>
-          <Button onClick={()=> this.props.reset()} >FINISH</Button>
+          <Button onClick={()=> this.props.reset([])} >FINISH</Button>
         </Wrapper>
       )
     }
@@ -174,7 +171,7 @@ class Game extends React.Component {
           })
         }
         <Button
-        onClick={()=> this.props.reset()}
+        onClick={()=> this.props.reset(["wordListCategory","wordList"])}
         ><i className="material-icons">arrow_back</i></Button>
       </Wrapper>
     );
@@ -189,7 +186,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addWords: (word) => { dispatch(actions.addWords(word)) },
-    reset: () => { dispatch(actions.reset()) },    
+    reset: (options) => { dispatch(actions.reset(options)) },    
     wordFromList: (wordIndex) => { dispatch(actions.wordFromList(wordIndex)) },    
     wordListCategory: (wordListCategory) => { dispatch(actions.wordListCategory(wordListCategory)) },    
     convertWordToDashes: (currentWord) => { dispatch(actions.convertWordToDashes(currentWord)) },    

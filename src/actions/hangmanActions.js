@@ -5,10 +5,10 @@ export function addWords(words = '') {
     };
 }
 
-export function reset() {   
+export function reset(options) {  
     return {
         type: "RESET",
-        payload: true
+        payload: options
     };
 }
 

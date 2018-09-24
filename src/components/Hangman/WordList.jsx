@@ -6,12 +6,32 @@ import * as actions from "../../actions/hangmanActions";
 import * as pageActions from "../../actions/pageAnimations";
 
 const Wrapper = styled.div`
+    padding-top: 5%;
+    padding-bottom: 5%;
     display:grid;
     background: ghostwhite;
-    grid-gap: 5px;
+    grid-gap: 20px;
     cursor:pointer;
-    grid-template-columns: 1fr
+    grid-template-columns: 1fr 1fr 1fr;
 `
+const Button = styled.div`
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    background: #aa00ff;
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    max-height: 25px;
+    &:hover{
+      background: white;
+      color:#aa00ff;
+      border: 1px solid;
+    }
+ `
+
 
 class WordList extends React.Component {
 
@@ -28,20 +48,30 @@ class WordList extends React.Component {
     }        
   }
 
+
   render(){ 
+    let styled = {}
+    let clickedButton = this.props.hangman.wordListCategory;
+    
     return (
       <Wrapper>
-        <div onClick={()=> { this.addWords('my_words') }} >My Words</div>
-        {Object.keys(words).map((word, index) => {
+        <Button onClick={()=> { this.addWords('my_words') }} >My Words</Button>
+
+        {Object.keys(words).map((word, index, array) => {
+          if(array[index] === this.props.hangman.wordListCategory){
+            styled = {backgroundColor: "white", color: "#aa00ff"}
+          } else {
+            styled = {};
+          }
           return ( 
-            <div key={`word-${index}`} 
+            <Button style={styled} key={`word-${index}`} 
               onClick={()=> {
-                this.addWords(word) 
+                this.addWords(word)
                 this.props.changeTab('game')
                 }
               }>
             {word}
-            </div>)
+            </Button>)
         })}
       </Wrapper>
     );
