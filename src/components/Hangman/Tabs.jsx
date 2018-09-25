@@ -13,28 +13,26 @@ const Wrapper = styled.div`
     padding: 2%;
     border-radius: 10px;
     cursor:pointer;
-    grid-template-rows: 1fr 11fr;
     grid-template-columns: 1fr
 `
 
 const Tab = styled.div`
     display: grid;
     grid-gap: 5px;
-    height: 30px;
-    grid-template-columns: 1fr 1fr 1fr;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 100;
 `
 const TabName = styled.div`
     display:flex;
     align-items: center;
-    justify-content: center;
-    border-top: 1px solid;
-    border-left: 1px solid;
-    border-right: 1px solid;
-    border-top-left-radius: 10px; 
-    border-top-right-radius: 10px; 
     width:90%;
-    background:  #aa00ff;
-    color: white;
+    color: #aa00ff;
 `
 
 
@@ -67,13 +65,12 @@ class Tabs extends React.Component {
       view = <Themes/>
       themesTab = {backgroundColor: "white", color: "#aa00ff"}
     }
-
+    
+    let tab = <Tab><TabName style={wordListTab} onClick={()=> this.changeTab("wordList")}>Themes</TabName></Tab>
+    tab = ''
     return (
       <Wrapper>        
-        <Tab>
-        <TabName style={gameTab} onClick={()=> this.changeTab("game")}>Game</TabName>
-        <TabName style={wordListTab} onClick={()=> this.changeTab("wordList")}>Themes</TabName>
-        </Tab>
+        {tab}
         { view }
       </Wrapper>
     );

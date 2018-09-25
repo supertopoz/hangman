@@ -7,9 +7,10 @@ import * as pageActions from "../../actions/pageAnimations";
 
 const Wrapper = styled.div`
     padding-bottom: 5%;
+    padding-top: 5%;
     display:grid;
     background: ghostwhite;
-    grid-gap: 4%;
+    grid-gap: 10px;
     cursor:pointer;
     grid-template-columns: 1fr 1fr;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -22,11 +23,10 @@ const Button = styled.div`
     justify-content: center;
     border: 1px solid;
     background: white;
-    padding: 5px;
     color: #aa00ff;
     border-radius: 10px;
     text-align: center;
-    max-height: 25px;
+    height: 25px;
     &:hover{
       background: #aa00ff;
       color:white;
