@@ -122,7 +122,7 @@ class Game extends React.Component {
     let view;
     let keyboard = <div></div>;
     let textAreaDisable = false;
-    if(this.props.pageAnimations.isMobile){
+    if(this.props.pageAnimations.isMobile && this.props.hangman.wordListCategory === 'my_words'){
       textAreaDisable = true;
       keyboard = (<Keyboard layout={layout} display={display} onChange={e => this.handleChange(e,'mobile')}/>)
     }
@@ -140,9 +140,9 @@ class Game extends React.Component {
       return (
         <StartWrapper>          
           <WordInput disabled={ textAreaDisable} value={ this.props.hangman.wordList} onChange={this.handleChange.bind(this)}/>          
-          <WordList/>
-          <Button onClick={()=> this.reset(0)}>START</Button>
           {keyboard}
+          <WordList/>
+          <Button onClick={()=> this.reset(0)}>START</Button>          
         </StartWrapper>
       )
     }

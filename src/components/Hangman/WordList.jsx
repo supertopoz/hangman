@@ -10,9 +10,9 @@ const Wrapper = styled.div`
     padding-bottom: 5%;
     display:grid;
     background: ghostwhite;
-    grid-gap: 20px;
+    grid-gap: 4%;
     cursor:pointer;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 `
 const Button = styled.div`
     display:flex;
@@ -37,7 +37,7 @@ class WordList extends React.Component {
 
   addWords(category){
     this.props.reset();
-    let myWords = window.localStorage.getItem('my_words') || ''
+    let myWords = window.localStorage.getItem('my_words') || JSON.stringify([''])
     let myNewWords = JSON.parse(myWords)
     if(category === 'my_words'){
         this.props.addWords(myNewWords)
@@ -51,11 +51,15 @@ class WordList extends React.Component {
 
   render(){ 
     let styled = {}
-    let clickedButton = this.props.hangman.wordListCategory;
-    
+    if(this.props.hangman.wordListCategory === 'my_words'){
+      console.log('styled')
+      styled = {backgroundColor: "white", color: "#aa00ff"}
+    } else {
+      styled = {};
+    }    
     return (
       <Wrapper>
-        <Button onClick={()=> { this.addWords('my_words') }} >My Words</Button>
+        <Button style={styled} onClick={()=> { this.addWords('my_words') }} >My Words</Button>
 
         {Object.keys(words).map((word, index, array) => {
           if(array[index] === this.props.hangman.wordListCategory){
