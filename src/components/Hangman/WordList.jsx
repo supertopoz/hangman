@@ -6,30 +6,33 @@ import * as actions from "../../actions/hangmanActions";
 import * as pageActions from "../../actions/pageAnimations";
 
 const Wrapper = styled.div`
-    padding-top: 5%;
     padding-bottom: 5%;
     display:grid;
     background: ghostwhite;
     grid-gap: 4%;
     cursor:pointer;
     grid-template-columns: 1fr 1fr;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
 `
 const Button = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
     border: 1px solid;
-    background: #aa00ff;
+    background: white;
     padding: 5px;
-    color: white;
+    color: #aa00ff;
     border-radius: 10px;
     text-align: center;
     max-height: 25px;
     &:hover{
-      background: white;
-      color:#aa00ff;
+      background: #aa00ff;
+      color:white;
       border: 1px solid;
     }
+
  `
 
 
@@ -53,7 +56,7 @@ class WordList extends React.Component {
     let styled = {}
     if(this.props.hangman.wordListCategory === 'my_words'){
       console.log('styled')
-      styled = {backgroundColor: "white", color: "#aa00ff"}
+      styled = {backgroundColor: "#aa00ff", color: "white"}
     } else {
       styled = {};
     }    
@@ -63,7 +66,7 @@ class WordList extends React.Component {
 
         {Object.keys(words).map((word, index, array) => {
           if(array[index] === this.props.hangman.wordListCategory){
-            styled = {backgroundColor: "white", color: "#aa00ff"}
+            styled = {backgroundColor: "#aa00ff", color: "white"}
           } else {
             styled = {};
           }

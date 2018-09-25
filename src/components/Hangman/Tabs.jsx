@@ -12,9 +12,8 @@ const Wrapper = styled.div`
     background: ghostwhite;
     padding: 2%;
     border-radius: 10px;
-    grid-gap: 10px;
     cursor:pointer;
-    grid-template-rows: 1fr 10fr;
+    grid-template-rows: 1fr 11fr;
     grid-template-columns: 1fr
 `
 

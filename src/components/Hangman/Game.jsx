@@ -12,9 +12,8 @@ const Wrapper = styled.div`
     display:grid;
     background: ghostwhite;
     border-radius: 10px;
-    grid-gap: 5px;
+    grid-gap: 4%;
     cursor:pointer;
-    grid-template-rows: auto;
     @media only screen and (min-width: 320px)  { 
       grid-template-columns: repeat(7, 1fr)
     }
@@ -30,7 +29,7 @@ const StartWrapper = styled.div`
     display:grid;
     background: ghostwhite;
     border-radius: 10px;
-    grid-gap: 5px;
+    grid-gap: 2%;
     cursor:pointer;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
@@ -56,9 +55,13 @@ const Button = styled.div`
  `
 
 const WordInput = styled.textarea`
-    max-height: 42px;
-    width: 100%;
-    border: 0;
+    width: 95%;
+    border:none;
+    border-top: 1px solid #aa00ff;
+
+    padding: 2%;
+    color: #aa00ff;
+    font-size: 1.3rem;
     background: white no-repeat;
     background-image: linear-gradient(to bottom, #aa00ff, #aa00ff), linear-gradient(to bottom, silver, silver);
     background-size: 0 2px, 100% 1px;
@@ -67,6 +70,12 @@ const WordInput = styled.textarea`
     &:focus{
       background-size: 100% 2px, 100% 1px;
       outline: none;
+      border: 1px solid #aa00ff;
+      box-shadow: 3px 3px 5px 0px #9E9E9E;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-top-right-radius: 10px;
+
     }
 `
 
@@ -120,7 +129,7 @@ class Game extends React.Component {
 
   render(){
     let view;
-    let keyboard = <div></div>;
+    let keyboard = '';
     let textAreaDisable = false;
     if(this.props.pageAnimations.isMobile && this.props.hangman.wordListCategory === 'my_words'){
       textAreaDisable = true;
@@ -138,8 +147,11 @@ class Game extends React.Component {
 
     if(this.props.hangman.word === '' ){
       return (
-        <StartWrapper>          
+        <StartWrapper>   
+          <div>  
+          <p style={{'textAlign' : 'center'}}>Word List</p>
           <WordInput disabled={ textAreaDisable} value={ this.props.hangman.wordList} onChange={this.handleChange.bind(this)}/>          
+          </div>
           {keyboard}
           <WordList/>
           <Button onClick={()=> this.reset(0)}>START</Button>          
