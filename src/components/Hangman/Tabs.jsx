@@ -4,7 +4,7 @@ import styled from "styled-components";
 import * as actions from "../../actions/pageAnimations";
 
 import Game from "./Game";
-import WordList from "./WordList";
+import WordCategories from "./WordCategories";
 
 const Wrapper = styled.div`
     display:grid;
@@ -58,7 +58,7 @@ class Tabs extends React.Component {
       gameTab = {backgroundColor: "white", color: "#aa00ff"}
     }
     if(this.props.pageAnimations.tab === 'wordList'){
-      view = <WordList/>
+      view = <WordCategories/>
       wordListTab = {backgroundColor: "white", color: "#aa00ff"}
     }
     if(this.props.pageAnimations.tab === 'themes') {

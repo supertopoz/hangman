@@ -1,10 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-
+import {NotificationManager} from 'react-notifications';
 import * as hangmanActions from "../../actions/hangmanActions";
 import * as pageAnimations from "../../actions/pageAnimations";
-import WordList from "./WordList";
 import { words } from "./words"
 
 
@@ -45,17 +44,8 @@ const DesktopWrapper = styled.div``
 
 class WordInput extends React.Component {
 
-  handleChange(e, mobile){
-    console.log('clicked')
-    let newWords;
-   
-    mobile? newWords = e.split(','): newWords = e.target.value.toUpperCase().split(',');
-    window.localStorage.setItem('my_words', JSON.stringify(newWords));
-    this.props.addWords(newWords)
-   }  
 
    textAreaFocus(e, eventType){
-    console.log(e.target.focus())
     if(this.props.pageAnimations.isMobile){
       this.props.displayMobileInputs(true);
     }
@@ -67,10 +57,30 @@ class WordInput extends React.Component {
     }
    }
    
+   handleChange(e){
+    
+    let words = e.target.value.toUpperCase().split(',')
+    console.log(words)
+    const acceptedChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",","," ", ""]
+    const letterToCheck = e.target.value.toUpperCase()[e.target.value.length -1]
+    console.log(letterToCheck)
+    if(acceptedChars.indexOf(letterToCheck) >= 0 || letterToCheck === undefined ){
+      window.localStorage.setItem('my_words', JSON.stringify(words));
+      this.props.addWords(words)
+    } else {
+      NotificationManager.info('Yey! Hangman only works with English Alphabet A-Z and ","');
+    }
+   }
 
 
   render(){
-      let input = <Input onBlur={()=> this.textAreaBlur()} onFocus={(e) => this.textAreaFocus(e)}></Input>
+      let input = <Input 
+        
+        onChange={(e)=> this.handleChange(e)} 
+        onFocus={(e) => this.textAreaFocus(e)}
+        onBlur={()=> this.textAreaBlur()} 
+        value={ this.props.hangman.wordList}
+        />
       if(this.props.hangman.wordListCategory !== 'my_words'){
         return <div>{this.props.hangman.wordList.map((item, index) => <span key={`word-${index}`}>{item}, </span>)}</div>
       }
