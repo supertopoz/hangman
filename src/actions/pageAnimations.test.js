@@ -5,4 +5,8 @@ describe('page actions', () => {
     const expectedAction = { type: 'IS_MOBILE', payload: true}
     expect(actions.isMobile(true)).toEqual(expectedAction)
   })
+  it('should create an action for displaying mobile inputs', () => {
+    const expectedAction = { type: 'DISPLAY_MOBILE_INPUTS', payload: true}
+    expect(actions.displayMobileInputs(true)).toEqual(expectedAction)
+  })
 })

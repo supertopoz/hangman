@@ -5,7 +5,8 @@ const initialState = {
     loadingBar: false,
     sideMenu: false,
     tab: '',
-    isMobile: false
+    isMobile: false,
+    displayMobileInputs: false,
 }
 
 describe('pageAnimation reducer', () => {
@@ -68,4 +69,15 @@ describe('pageAnimation reducer', () => {
       })
     ).toEqual(targetState)
   })
+  it('should handle DISPLAY_MOBILE_INPUTS', ()=>{
+    const initialState = {
+      displayMobileInputs: false,      
+    }
+    const targetState = {
+      displayMobileInputs: true,      
+    }
+    expect( pageAnimations( initialState, { type: 'DISPLAY_MOBILE_INPUTS', payload: true } ))
+    .toEqual(targetState)  
+
+  });
 })

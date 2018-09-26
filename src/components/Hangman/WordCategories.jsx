@@ -36,7 +36,7 @@ const Button = styled.div`
  `
 
 
-class WordList extends React.Component {
+class WordCategories extends React.Component {
 
   addWords(category){
     this.props.reset();
@@ -99,4 +99,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(WordList);
+export default connect(mapStateToProps, mapDispatchToProps)(WordCategories);

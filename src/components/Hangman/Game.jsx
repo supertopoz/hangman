@@ -1,11 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-import Keyboard from "react-simple-keyboard";
-import "simple-keyboard/build/css/index.css";
 
-import * as actions from "../../actions/hangmanActions";
-import WordList from "./WordList";
+import * as hangmanActions from "../../actions/hangmanActions";
+import WordCategories from "./WordCategories";
+import WordInput from "./WordInput";
 import { words } from "./words"
 
 const Wrapper = styled.div`
@@ -27,13 +26,12 @@ const Wrapper = styled.div`
 
 const StartWrapper = styled.div`
     display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
     background: ghostwhite;
     border-radius: 10px;
     grid-gap: 2%;
     cursor:pointer;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-
 `
 
 const Button = styled.div`
@@ -54,53 +52,7 @@ const Button = styled.div`
     }
  `
 
-const WordInput = styled.textarea`
-    width: 95%;
-    border:none;
-    border-top: 1px solid #aa00ff;
-
-    padding: 2%;
-    color: #aa00ff;
-    font-size: 1.3rem;
-    background: white no-repeat;
-    background-image: linear-gradient(to bottom, #aa00ff, #aa00ff), linear-gradient(to bottom, silver, silver);
-    background-size: 0 2px, 100% 1px;
-    background-position: 50% 100%, 50% 100%;
-    transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-    &:focus{
-      background-size: 100% 2px, 100% 1px;
-      outline: none;
-      border: 1px solid #aa00ff;
-      box-shadow: 3px 3px 5px 0px #9E9E9E;
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
-      border-top-right-radius: 10px;
-
-    }
-`
-
-const layout = {
-  default: [
-    "Q W E R T Y U I O P",
-    "A S D F G H J K L ,",
-    "Z X C V B N M {bksp}",
-    "{space}"
-  ]
-};
-
-const display = {
-  "{bksp}": "DEL",
-  "{space}": " "
-};
-
 class Game extends React.Component {
-
-  handleChange(e, mobile){
-    let newWords;
-    mobile? newWords = e.split(','): newWords = e.target.value.toUpperCase().split(',');
-    window.localStorage.setItem('my_words', JSON.stringify(newWords));
-    this.props.addWords(newWords)
-   }  
 
   reset(resetPosition){
     const wordList = this.props.hangman.wordList;
@@ -112,35 +64,27 @@ class Game extends React.Component {
     this.props.convertWordToDashes();
    }
 
-   selectButton(){
-    let newWords = '';
-    let wordLength = 0;
-    if(this.props.hangman.wordListCategory === 'my_words'){
-        newWords = window.localStorage.getItem('my_words');
-        let array = JSON.parse(newWords)
-        wordLength = array.length;
-    } else {
-        newWords = words[this.props.hangman.wordListCategory];
-        wordLength = newWords.length;
-    }
+  handleLocalStorage(){
+    let localWords = window.localStorage.getItem('my_words');
+    if (localWords === null) return 0
+    let array = JSON.parse(localWords);
+    return array.length;
+  }
+  selectButton(){
+    let wordListLength = this.handleLocalStorage();
+    if(this.props.hangman.wordListCategory !== 'my_words'){        
+      wordListLength = words[this.props.hangman.wordListCategory].length;
+    } 
     const word = this.props.hangman.currentWordIndex + 1;
-    word >= wordLength? this.props.reachedEnd() : this.reset(word);
+    word >= wordListLength? this.props.reachedEnd() : this.reset(word);
   }
 
   render(){
-    let view;
-    let keyboard = '';
-    let textAreaDisable = false;
-    if(this.props.pageAnimations.isMobile && this.props.hangman.wordListCategory === 'my_words'){
-      textAreaDisable = true;
-      keyboard = (<Keyboard layout={layout} display={display} onChange={e => this.handleChange(e,'mobile')}/>)
-    }
-
     if(this.props.hangman.reachedEndofList){
       return (
         <Wrapper>
+          <Button onClick={()=> this.props.reset(["wordListCategory","wordList"])} >FINISH</Button>
           <Button onClick={()=> this.reset(0)} >RESTART</Button>
-          <Button onClick={()=> this.props.reset([])} >FINISH</Button>
         </Wrapper>
       )
     }
@@ -149,12 +93,11 @@ class Game extends React.Component {
       return (
         <StartWrapper>   
           <div>  
-          <p style={{'textAlign' : 'center'}}>Word List</p>
-          <WordInput disabled={ textAreaDisable} value={ this.props.hangman.wordList} onChange={this.handleChange.bind(this)}/>          
+            <Button onClick={()=> this.reset(0)}>START</Button> 
+            <div style={{'textAlign' : 'center', 'padding': '5px'}}>Word List</div>     
           </div>
-          {keyboard}
-          <WordList/>
-          <Button onClick={()=> this.reset(0)}>START</Button>          
+          <WordInput/>
+          <WordCategories/>                   
         </StartWrapper>
       )
     }
@@ -192,19 +135,19 @@ class Game extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  return { hangman: state.hangman, pageAnimations: state.pageAnimations };
+  return { hangman: state.hangman };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addWords: (word) => { dispatch(actions.addWords(word)) },
-    reset: (options) => { dispatch(actions.reset(options)) },    
-    wordFromList: (wordIndex) => { dispatch(actions.wordFromList(wordIndex)) },    
-    wordListCategory: (wordListCategory) => { dispatch(actions.wordListCategory(wordListCategory)) },    
-    convertWordToDashes: (currentWord) => { dispatch(actions.convertWordToDashes(currentWord)) },    
-    getLetter: (letter) => { dispatch(actions.getLetter(letter)) },   
-    letterCheckInsert: () => { dispatch(actions.letterCheckInsert()) },   
-    reachedEnd: () => { dispatch(actions.reachedEnd()) }    
+    addWords: (word) => { dispatch(hangmanActions.addWords(word)) },
+    reset: (options) => { dispatch(hangmanActions.reset(options)) },    
+    wordFromList: (wordIndex) => { dispatch(hangmanActions.wordFromList(wordIndex)) },    
+    wordListCategory: (wordListCategory) => { dispatch(hangmanActions.wordListCategory(wordListCategory)) },    
+    convertWordToDashes: (currentWord) => { dispatch(hangmanActions.convertWordToDashes(currentWord)) },    
+    getLetter: (letter) => { dispatch(hangmanActions.getLetter(letter)) },   
+    letterCheckInsert: () => { dispatch(hangmanActions.letterCheckInsert()) },   
+    reachedEnd: () => { dispatch(hangmanActions.reachedEnd()) },  
   };
 };
 

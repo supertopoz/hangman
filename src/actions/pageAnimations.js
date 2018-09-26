@@ -23,3 +23,9 @@ export function isMobile(isMobile = false) {
         payload: isMobile
     };
 }
+export function displayMobileInputs(display = false) {
+    return {
+        type: "DISPLAY_MOBILE_INPUTS",
+        payload: display
+    };
+}

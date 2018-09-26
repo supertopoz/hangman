@@ -2,7 +2,8 @@ const pageAnimations = (state = {
     loadingBar: false,
     sideMenu: false,
     tab: '',
-    isMobile: false
+    isMobile: false,
+    displayMobileInputs: false
 }, action) => {
     switch (action.type) {
         case "SHOW_LOADING_BAR":
@@ -27,6 +28,12 @@ const pageAnimations = (state = {
         state = {
             ...state, 
             isMobile: action.payload,
+        }
+        break;
+        case "DISPLAY_MOBILE_INPUTS":
+        state = {
+            ...state, 
+            displayMobileInputs: action.payload,
         }
         break;
     }
