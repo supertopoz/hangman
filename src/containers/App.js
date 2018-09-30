@@ -31,9 +31,11 @@ class App extends React.Component {
 		<SideMenu menu={true}/>
 		<Header/>
 		<LoadingBar/>
-	    <Route exact path="/" component={Home}></Route>
-	    <Route exact path="/hangman" component={Hangman}></Route>
+		<main>   
+	    <Route path="/hangman" component={Hangman}></Route>
 	    <Route path="/disclaimer" component={Disclaimer}></Route>
+	    <Route exact path="/" component={Home}></Route>
+	    </main>
 		<NotificationContainer/>
 		</div>
 	);

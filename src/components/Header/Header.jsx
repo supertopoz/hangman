@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components"
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import 'material-icons/iconfont/material-icons.css'
 
 import { showSideMenu } from "../../actions/pageAnimations";
 const FixedHeader = styled.div`
@@ -33,14 +34,7 @@ class Header extends React.Component {
         <FixedHeader>
           { console.log('These are props for the header:', this.props)}
           <Menu onClick={()=> this.props.showSideMenu(true)}><i className="material-icons">menu</i></Menu>                
-          <Link to="/"><Heading>HANGMAN FOR EDUCATION</Heading></Link>
-          
-          <div></div>
-          <Link to="/about">
-            <div>        
-            </div>
-           
-          </Link>
+          <Link to="/"><Heading>HANGMAN FOR EDUCATION</Heading></Link>          
         </FixedHeader>
     );
   }

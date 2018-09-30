@@ -1,11 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {NotificationManager} from 'react-notifications';
-import store from "./store";
 import { Provider } from "react-redux";
 import PropTypes from 'prop-types'
+
+import {NotificationManager} from 'react-notifications';
+import "typeface-roboto";
+
+
+import store from "./store";
 import App from './src/containers/App';
 import './src/containers/index.css';
+
 import {
   BrowserRouter as Router,
   Route,
