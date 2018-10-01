@@ -52,7 +52,8 @@ export const Home = (props) => {
            HANGMAN FOR EDUCATION
            <p style={ {fontSize: "1rem"}}>
              Here you can play hangman. Add your own words, choose from several themes and word lists. Great to play in class or on your own. Works without internet on modern browsers.
-           </p>         
+           </p> 
+           <p style={ {fontSize: "1rem"}}>Contact us for new word lists or feedback: info@hangman.education</p>        
            </Header>
            </Banner>
            <Link to="/hangman" ><Button >PLAY HANGMAN</Button></Link>
