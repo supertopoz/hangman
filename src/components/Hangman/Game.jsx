@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-
+import {NotificationManager} from 'react-notifications';
 import * as hangmanActions from "../../actions/hangmanActions";
 import * as pageAnimations from "../../actions/pageAnimations";
 import WordCategories from "./WordCategories";
@@ -56,7 +56,12 @@ const Button = styled.div`
 class Game extends React.Component {
 
   reset(resetPosition){
+
     const wordList = this.props.hangman.wordList;
+    if(wordList.length === 0){
+      NotificationManager.warning('Please select a word list or create your own.','Opps! No words to play with')
+      return;
+    }
     const wordListCategory = this.props.hangman.wordListCategory;
     this.props.reset();
     this.props.addWords(wordList);

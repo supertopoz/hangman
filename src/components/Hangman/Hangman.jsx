@@ -68,6 +68,7 @@ class Hangman extends React.Component {
     }
 
   render(){
+
     let semiCompleteWord = this.props.hangman.semiCompleteWord
     
     let divStyle = {backgroundColor: "white"}
