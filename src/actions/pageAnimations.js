@@ -29,3 +29,10 @@ export function displayMobileInputs(display = false) {
         payload: display
     };
 }
+
+export function hideWordList(display = false) {
+    return {
+        type: "HIDE_WORD_LIST",
+        payload: display
+    };
+}

@@ -39,6 +39,9 @@ const MobileWrapper = styled.div`
     padding-top: 20%;
 `
 
+const HiddenWords = styled.span`
+`
+
 const DesktopWrapper = styled.div``
 
 
@@ -72,6 +75,12 @@ class WordInput extends React.Component {
     }
    }
 
+   convertLetters(word){
+     let hiddenWord = ''
+     word.split('').forEach((letter)=> hiddenWord += '_ ')
+     return hiddenWord;
+   }
+
 
   render(){
       let input = <Input 
@@ -82,6 +91,12 @@ class WordInput extends React.Component {
         value={ this.props.hangman.wordList}
         />
       if(this.props.hangman.wordListCategory !== 'my_words'){
+        if(this.props.pageAnimations.hideWordList){
+          return (<div>{this.props.hangman.wordList.map((item, index) => { 
+            let hiddenWord =  this.convertLetters(item)
+            return <HiddenWords key={`word-${index}`}>{hiddenWord}, </HiddenWords>})
+        }</div>)
+        }
         return <div>{this.props.hangman.wordList.map((item, index) => <span key={`word-${index}`}>{item}, </span>)}</div>
       }
       if(this.props.pageAnimations.displayMobileInputs) return <MobileWrapper><div></div>{input}<div></div></MobileWrapper>      

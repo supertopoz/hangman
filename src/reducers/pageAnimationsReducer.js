@@ -3,7 +3,8 @@ const pageAnimations = (state = {
     sideMenu: false,
     tab: '',
     isMobile: false,
-    displayMobileInputs: false
+    displayMobileInputs: false,
+    hideWordList: true
 }, action) => {
     switch (action.type) {
         case "SHOW_LOADING_BAR":
@@ -34,6 +35,12 @@ const pageAnimations = (state = {
         state = {
             ...state, 
             displayMobileInputs: action.payload,
+        }
+        break;       
+        case "HIDE_WORD_LIST":
+        state = {
+            ...state, 
+            hideWordList: action.payload,
         }
         break;
     }

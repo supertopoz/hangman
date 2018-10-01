@@ -55,7 +55,6 @@ class WordCategories extends React.Component {
   render(){ 
     let styled = {}
     if(this.props.hangman.wordListCategory === 'my_words'){
-      console.log('styled')
       styled = {backgroundColor: "#aa00ff", color: "white"}
     } else {
       styled = {};

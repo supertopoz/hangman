@@ -7,6 +7,7 @@ const initialState = {
     tab: '',
     isMobile: false,
     displayMobileInputs: false,
+    hideWordList: true
 }
 
 describe('pageAnimation reducer', () => {
@@ -79,5 +80,15 @@ describe('pageAnimation reducer', () => {
     expect( pageAnimations( initialState, { type: 'DISPLAY_MOBILE_INPUTS', payload: true } ))
     .toEqual(targetState)  
 
+  });
+  it('should handle HIDE_WORD_LIST', ()=>{
+    const initialState = {
+      hideWordList: false,      
+    }
+    const targetState = {
+      hideWordList: true,      
+    }
+    expect( pageAnimations( initialState, { type: 'HIDE_WORD_LIST', payload: true } ))
+    .toEqual(targetState)  
   });
 })

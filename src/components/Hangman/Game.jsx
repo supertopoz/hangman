@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import styled from "styled-components";
 
 import * as hangmanActions from "../../actions/hangmanActions";
+import * as pageAnimations from "../../actions/pageAnimations";
 import WordCategories from "./WordCategories";
 import WordInput from "./WordInput";
 import { words } from "./words"
@@ -80,6 +81,9 @@ class Game extends React.Component {
   }
 
   render(){
+    let visibiilty = <i  className="material-icons">visibility</i>;
+    if(this.props.pageAnimations.hideWordList) visibiilty =  <i className="material-icons">visibility_off</i>;
+
     if(this.props.hangman.reachedEndofList){
       return (
         <Wrapper>
@@ -94,7 +98,12 @@ class Game extends React.Component {
         <StartWrapper>   
           <div>  
             <Button onClick={()=> this.reset(0)}>START</Button> 
-            <div style={{'textAlign' : 'center', 'padding': '5px'}}>Word List</div>     
+            <div style={{'textAlign' : 'center', 'padding': '5px'}}>
+            Word List
+            <span style={{'float':'right'}} onClick={
+                () => { this.props.pageAnimations.hideWordList? this.props.hideWordList(false) : this.props.hideWordList(true) }}>
+                {visibiilty}</span>
+            </div>     
           </div>
           <WordInput/>
           <WordCategories/>                   
@@ -135,7 +144,7 @@ class Game extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  return { hangman: state.hangman };
+  return { hangman: state.hangman, pageAnimations: state.pageAnimations };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -148,6 +157,7 @@ const mapDispatchToProps = (dispatch) => {
     getLetter: (letter) => { dispatch(hangmanActions.getLetter(letter)) },   
     letterCheckInsert: () => { dispatch(hangmanActions.letterCheckInsert()) },   
     reachedEnd: () => { dispatch(hangmanActions.reachedEnd()) },  
+    hideWordList:(display) => { dispatch(pageAnimations.hideWordList(display))}
   };
 };
 
