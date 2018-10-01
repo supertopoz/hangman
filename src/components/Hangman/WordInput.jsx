@@ -61,12 +61,11 @@ class WordInput extends React.Component {
    }
    
    handleChange(e){
-    
     let words = e.target.value.toUpperCase().split(',')
-    console.log(words)
-    const acceptedChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",","," ", ""]
-    const letterToCheck = e.target.value.toUpperCase()[e.target.value.length -1]
-    console.log(letterToCheck)
+    const acceptedChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",","," ", "","_"]
+    const letterToCheck = e.target.value.toUpperCase()[e.target.value.length -1];
+    const deleteLetter = e.target
+    console.log(deleteLetter)
     if(acceptedChars.indexOf(letterToCheck) >= 0 || letterToCheck === undefined ){
       window.localStorage.setItem('my_words', JSON.stringify(words));
       this.props.addWords(words)
@@ -76,28 +75,35 @@ class WordInput extends React.Component {
    }
 
    convertLetters(word){
-     let hiddenWord = ''
-     word.split('').forEach((letter)=> hiddenWord += '_ ')
-     return hiddenWord;
+    
+     return word.reduce((arc, item) => {        
+        let hiddenWord = '' 
+        item.split('').forEach((letter)=> hiddenWord += '_')
+        arc.push(hiddenWord);
+        hiddenWord = '';
+        return arc
+      },[])
    }
 
 
   render(){
-      let input = <Input 
-        
-        onChange={(e)=> this.handleChange(e)} 
+      let wordList = this.props.hangman.wordList;
+      if(this.props.pageAnimations.hideWordList){
+        wordList = this.convertLetters(wordList)
+        console.log(wordList)
+      }
+      let input = <Input         
+        onChange={(e)=> this.handleChange(e, 'change')} 
         onFocus={(e) => this.textAreaFocus(e)}
         onBlur={()=> this.textAreaBlur()} 
-        value={ this.props.hangman.wordList}
+        value = {wordList}
+
         />
       if(this.props.hangman.wordListCategory !== 'my_words'){
         if(this.props.pageAnimations.hideWordList){
-          return (<div>{this.props.hangman.wordList.map((item, index) => { 
-            let hiddenWord =  this.convertLetters(item)
-            return <HiddenWords key={`word-${index}`}>{hiddenWord}, </HiddenWords>})
-        }</div>)
+          return <div>{wordList.map((item, index) => <HiddenWords key={`word-${index}`}>{item}, </HiddenWords>)}</div>
         }
-        return <div>{this.props.hangman.wordList.map((item, index) => <span key={`word-${index}`}>{item}, </span>)}</div>
+        return <div>{wordList.map((item, index) => <span key={`word-${index}`}>{item}, </span>)}</div>
       }
       if(this.props.pageAnimations.displayMobileInputs) return <MobileWrapper><div></div>{input}<div></div></MobileWrapper>      
       return <DesktopWrapper>{input}</DesktopWrapper>
